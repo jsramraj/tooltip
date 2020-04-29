@@ -8,6 +8,7 @@
 
     <TextView
         android:id="@+id/helloWorldLabel"
+        android:background="#00ff00"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
