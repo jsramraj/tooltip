@@ -28,6 +28,7 @@ public class ToolTipHolder {
 
         View tipView = LayoutInflater.from(activity).inflate(R.layout.tooltip_content, null);
         TextView tipTextView = tipView.findViewById(R.id.hint_text);
+        Viewport holeView = tipView.findViewById(R.id.see_through_view);
         tipTextView.setText(tipText);
 
         Rect myViewRect2 = new Rect();
@@ -44,6 +45,11 @@ public class ToolTipHolder {
         param.height = view.getMeasuredHeight();
 //        param.width = view.getMeasuredWidth();
         tipTextView.setLayoutParams(param);
+
+        FrameLayout.LayoutParams param2 = (FrameLayout.LayoutParams) holeView.getLayoutParams();
+        param2.leftMargin = pos[0] + view.getMeasuredWidth() / 2 - param2.width/2;
+        param2.topMargin = pos[1] - view.getMeasuredHeight() * 2;
+        holeView.setLayoutParams(param2);
 
 
         PopupWindow tipWindow = new PopupWindow(tipView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
