@@ -1,5 +1,7 @@
 package com.ramaraj.tooltip;
 
+import android.app.Activity;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +14,16 @@ public class ToolTipBuilder {
     }
 
     public void addStaticTips(String activityName, int[] identifiers, String[] tipsText) {
+        List<StaticTip> tipsForActivity = staticTipsForActivity(activityName);
+        for (int i = 0; i < identifiers.length; i++) {
+            StaticTip tip = new StaticTip(activityName, identifiers[i], tipsText[i]);
+            tipsForActivity.add(tip);
+        }
+        allTips.put(activityName, tipsForActivity);
+    }
+
+    public void addStaticTips(Activity activity, int[] identifiers, String[] tipsText) {
+        String activityName = activity.getLocalClassName();
         List<StaticTip> tipsForActivity = staticTipsForActivity(activityName);
         for (int i = 0; i < identifiers.length; i++) {
             StaticTip tip = new StaticTip(activityName, identifiers[i], tipsText[i]);

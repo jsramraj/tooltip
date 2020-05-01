@@ -1,10 +1,14 @@
 package com.ramaraj.tooltip.utils;
 
+import android.app.Activity;
+
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ResourceUtils {
 
-    public static int getResId(String resName, Class<?> c) {
+    public static int getResourceId(String resName, Class<?> c) {
 
         try {
             Field idField = c.getDeclaredField(resName);
@@ -13,6 +17,24 @@ public class ResourceUtils {
             e.printStackTrace();
             return -1;
         }
+    }
+
+    public static int getResourceId(Activity activity, String resName) {
+        try {
+            return Integer.parseInt(resName);
+        } catch (NumberFormatException e) {
+            return activity.getResources().getIdentifier(resName, "id", activity.getPackageName());
+        }
+    }
+
+    public static int[] getResourceIdentifiers(Activity activity, String[] stringIdentifiers) {
+        int[] identifiers = new int[stringIdentifiers.length];
+
+        for (int i = 0; i < stringIdentifiers.length; i++) {
+            identifiers[i] = getResourceId(activity, stringIdentifiers[i]);
+        }
+
+        return identifiers;
     }
 }
 

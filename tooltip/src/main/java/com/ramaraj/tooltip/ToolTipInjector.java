@@ -8,12 +8,19 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.ramaraj.tooltip.utils.ResourceUtils;
+
 public class ToolTipInjector {
 
-    public static void init(final Application application, final ToolTipBuilder builder) {
+    private static ToolTipBuilder tipBuilder;
+
+    public static void init(final Application application, final ToolTipComposer tipComposer) {
         application.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
+                int[] identifiers = ResourceUtils.getResourceIdentifiers(activity, tipComposer.tipIdentifiers(activity.getLocalClassName()));
+                tipBuilder = new ToolTipBuilder();
+                tipBuilder.addStaticTips(activity.getLocalClassName(), identifiers, tipComposer.tipTexts(activity.getLocalClassName()));
             }
 
             @Override
@@ -22,7 +29,7 @@ public class ToolTipInjector {
                 activityView.post(new Runnable() {
                     @Override
                     public void run() {
-                        ToolTipPresenter.displayStaticTipsForActivity(builder, activity);
+                        ToolTipPresenter.displayStaticTipsForActivity(tipBuilder, activity);
                     }
                 });
             }
