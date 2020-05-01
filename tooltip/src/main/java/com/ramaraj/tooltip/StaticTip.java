@@ -1,6 +1,7 @@
 package com.ramaraj.tooltip;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -14,18 +15,19 @@ import android.widget.TextView;
 
 public class StaticTip implements IToolTip {
 
-    private final Activity activity;
     private final int resourceId;
     private final String tipText;
+    private final String activityName;
 
-    public StaticTip(Activity activity, int resourceId, String tipText) {
-        this.activity = activity;
+    public StaticTip(String activityName, int resourceId, String tipText) {
+        this.activityName = activityName;
         this.resourceId = resourceId;
         this.tipText = tipText;
     }
 
     @Override
-    public void displayTip() {
+    public void displayTip(Context context) {
+        Activity activity = (Activity) context;
         View view = activity.findViewById(resourceId);
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
