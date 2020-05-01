@@ -12,7 +12,9 @@ public class ToolTipApp extends Application {
         super.onCreate();
 
         ToolTipComposer tipComposer = new ToolTipComposer();
-        tipComposer.addStaticTips("MainActivity", new String[]{"helloWorldLabel"}, new String[]{"Tips for hello world"});
+        String[] identifiers = new String[]{"helloWorldLabel", String.valueOf(R.id.empName), "designation"};
+        String[] tips = new String[]{"Tips for hello world", "Name of the logged in employee", "Role of the employee in the company"};
+        tipComposer.addStaticTips("MainActivity", identifiers, tips);
 
         ToolTipInjector.init(this, tipComposer);
     }

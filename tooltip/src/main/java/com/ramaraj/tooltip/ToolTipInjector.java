@@ -29,7 +29,7 @@ public class ToolTipInjector {
                 activityView.post(new Runnable() {
                     @Override
                     public void run() {
-                        ToolTipPresenter.displayStaticTipsForActivity(tipBuilder, activity);
+                        new ToolTipPresenter(tipBuilder, activity).displayStaticTipsForActivity();
                     }
                 });
             }

@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -18,6 +19,8 @@ public class StaticTip implements IToolTip {
     private final int resourceId;
     private final String tipText;
     private final String activityName;
+    private ToolTipListener listener;
+    private PopupWindow tipPopupWindow;
 
     public StaticTip(String activityName, int resourceId, String tipText) {
         this.activityName = activityName;
@@ -36,6 +39,8 @@ public class StaticTip implements IToolTip {
         View tipView = LayoutInflater.from(activity).inflate(R.layout.tooltip_content, null);
         TextView tipTextView = tipView.findViewById(R.id.hint_text);
         SeeThroughViewGroup holeView = tipView.findViewById(R.id.see_through_view);
+        Button nextButton = tipView.findViewById(R.id.nextButton);
+
         tipTextView.setText(tipText);
 
         Rect myViewRect2 = new Rect();
@@ -57,12 +62,28 @@ public class StaticTip implements IToolTip {
         param2.topMargin = pos[1] - view.getMeasuredHeight() * 2;
         holeView.setLayoutParams(param2);
 
-        PopupWindow tipWindow = new PopupWindow(tipView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
-        tipWindow.showAtLocation(view, Gravity.TOP|Gravity.RIGHT, 0, 0);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismissTip();
+            }
+        });
+
+        tipPopupWindow = new PopupWindow(tipView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
+        tipPopupWindow.showAtLocation(view, Gravity.TOP|Gravity.RIGHT, 0, 0);
     }
 
     @Override
     public void dismissTip() {
+        if (tipPopupWindow != null)
+            tipPopupWindow.dismiss();
 
+        if (listener != null) {
+            listener.onTipDismissed(StaticTip.this);
+        }
+    }
+
+    public void setListener(ToolTipListener listener) {
+        this.listener = listener;
     }
 }
