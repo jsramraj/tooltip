@@ -19,8 +19,10 @@ public class ToolTipInjector {
             @Override
             public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
                 int[] identifiers = ResourceUtils.getResourceIdentifiers(activity, tipComposer.tipIdentifiers(activity.getLocalClassName()));
-                tipBuilder = new ToolTipBuilder();
-                tipBuilder.addStaticTips(activity.getLocalClassName(), identifiers, tipComposer.tipTexts(activity.getLocalClassName()));
+                if (identifiers != null) {
+                    tipBuilder = new ToolTipBuilder();
+                    tipBuilder.addStaticTips(activity.getLocalClassName(), identifiers, tipComposer.tipTexts(activity.getLocalClassName()));
+                }
             }
 
             @Override
@@ -29,7 +31,9 @@ public class ToolTipInjector {
                 activityView.post(new Runnable() {
                     @Override
                     public void run() {
-                        new ToolTipPresenter(tipBuilder, activity).displayStaticTipsForActivity();
+                        if (tipBuilder != null && tipBuilder.staticTipsForActivity(activity.getLocalClassName()).size() > 0) {
+                            new ToolTipPresenter(tipBuilder, activity).displayStaticTipsForActivity();
+                        }
                     }
                 });
             }
