@@ -1,7 +1,6 @@
-package com.example.tooltip.Library;
+package com.ramaraj.tooltip;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -13,22 +12,28 @@ import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.example.tooltip.R;
+public class StaticTip implements IToolTip {
 
-public class ToolTipHolder {
+    private final Activity activity;
+    private final int resourceId;
+    private final String tipText;
 
-    public static void showTip(Activity activity, int resourceId, String tipText) {
-        View activityView = activity.findViewById(android.R.id.content);
+    public StaticTip(Activity activity, int resourceId, String tipText) {
+        this.activity = activity;
+        this.resourceId = resourceId;
+        this.tipText = tipText;
+    }
+
+    @Override
+    public void displayTip() {
         View view = activity.findViewById(resourceId);
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int width = (int) (displayMetrics.widthPixels / 2.325);
-        int height = (int) (displayMetrics.heightPixels / 2.325);
 
         View tipView = LayoutInflater.from(activity).inflate(R.layout.tooltip_content, null);
         TextView tipTextView = tipView.findViewById(R.id.hint_text);
-        Viewport holeView = tipView.findViewById(R.id.see_through_view);
+        SeeThroughViewGroup holeView = tipView.findViewById(R.id.see_through_view);
         tipTextView.setText(tipText);
 
         Rect myViewRect2 = new Rect();
@@ -43,7 +48,6 @@ public class ToolTipHolder {
         param.leftMargin = pos[0];
         param.topMargin = pos[1] - view.getMeasuredHeight() * 3;
         param.height = view.getMeasuredHeight();
-//        param.width = view.getMeasuredWidth();
         tipTextView.setLayoutParams(param);
 
         FrameLayout.LayoutParams param2 = (FrameLayout.LayoutParams) holeView.getLayoutParams();
@@ -51,8 +55,12 @@ public class ToolTipHolder {
         param2.topMargin = pos[1] - view.getMeasuredHeight() * 2;
         holeView.setLayoutParams(param2);
 
-
         PopupWindow tipWindow = new PopupWindow(tipView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
         tipWindow.showAtLocation(view, Gravity.TOP|Gravity.RIGHT, 0, 0);
+    }
+
+    @Override
+    public void dismissTip() {
+
     }
 }

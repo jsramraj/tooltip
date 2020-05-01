@@ -1,4 +1,4 @@
-package com.example.tooltip.Library;
+package com.ramaraj.tooltip;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -11,16 +11,16 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 
-public class Viewport extends ViewGroup {
-    public Viewport(Context context) {
+public class SeeThroughViewGroup extends ViewGroup {
+    public SeeThroughViewGroup(Context context) {
         super(context);
     }
 
-    public Viewport(Context context, AttributeSet attrs) {
+    public SeeThroughViewGroup(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public Viewport(Context context, AttributeSet attrs, int defStyle) {
+    public SeeThroughViewGroup(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
@@ -49,7 +49,6 @@ public class Viewport extends ViewGroup {
         eraser.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
         float width = (float) getWidth();
         float height =  getHeight();
-        RectF rect = new RectF(0, 0, width, height);
         RectF frame = new RectF(lineWidth, lineWidth, width-lineWidth, height-lineWidth);
         Path path = new Path();
         Paint stroke = new Paint();
@@ -60,26 +59,5 @@ public class Viewport extends ViewGroup {
         path.addRoundRect(frame, (float) viewportCornerRadius, (float) viewportCornerRadius, Path.Direction.CW);
         canvas.drawPath(path, stroke);
         canvas.drawRoundRect(frame, (float) viewportCornerRadius, (float) viewportCornerRadius, eraser);
-
-        /*
-        int viewportMargin = 32;
-        int viewportCornerRadius = 8;
-        Paint eraser = new Paint();
-        eraser.setAntiAlias(true);
-        eraser.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-        float width = (float) getWidth() - viewportMargin;
-        float height =  width * (float) 0.7;
-        RectF rect = new RectF((float)viewportMargin, (float)viewportMargin, width, height);
-        RectF frame = new RectF((float)viewportMargin-2, (float)viewportMargin-2, width+4, height+4);
-        Path path = new Path();
-        Paint stroke = new Paint();
-        stroke.setAntiAlias(true);
-        stroke.setStrokeWidth(4);
-        stroke.setColor(Color.WHITE);
-        stroke.setStyle(Paint.Style.STROKE);
-        path.addRoundRect(frame, (float) viewportCornerRadius, (float) viewportCornerRadius, Path.Direction.CW);
-        canvas.drawPath(path, stroke);
-        canvas.drawRoundRect(rect, (float) viewportCornerRadius, (float) viewportCornerRadius, eraser);
-        */
     }
 }

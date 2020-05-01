@@ -11,7 +11,7 @@
         android:clickable="true"
         android:focusable="true">
 
-        <com.example.tooltip.Library.Viewport
+        <com.ramaraj.tooltip.SeeThroughViewGroup
             android:id="@+id/see_through_view"
             android:layout_width="50dp"
             android:layout_height="50dp"

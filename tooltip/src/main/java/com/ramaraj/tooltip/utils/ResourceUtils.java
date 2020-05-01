@@ -1,4 +1,4 @@
-package com.example.tooltip.Utils;
+package com.ramaraj.tooltip.utils;
 
 import java.lang.reflect.Field;
 
@@ -15,3 +15,4 @@ public class ResourceUtils {
         }
     }
 }
+
