@@ -19,6 +19,8 @@ public class SeeThroughViewGroup extends ViewGroup {
     private static final int STROKE_LINE_WIDTH = 4;
     private static final int STROKE_LINE_HEIGHT = 4;
 
+    private float cornerRadius;
+
     private Paint strokePaint = null;
     private Paint eraserPaint = null;
 
@@ -72,8 +74,6 @@ public class SeeThroughViewGroup extends ViewGroup {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        int viewportCornerRadius = getWidth() / 2;
-
         float width = getWidth();
         float height = getHeight();
 
@@ -86,8 +86,8 @@ public class SeeThroughViewGroup extends ViewGroup {
 
         paintPath.addRoundRect(
                 rectFrame,
-                (float) viewportCornerRadius,
-                (float) viewportCornerRadius,
+                cornerRadius,
+                cornerRadius,
                 Path.Direction.CW
         );
 
@@ -95,26 +95,10 @@ public class SeeThroughViewGroup extends ViewGroup {
 
         canvas.drawRoundRect(
                 rectFrame,
-                (float) viewportCornerRadius,
-                (float) viewportCornerRadius,
+                cornerRadius,
+                cornerRadius,
                 eraserPaint
         );
-        int lineWidth = 4;
-        Paint eraser = new Paint();
-        eraser.setAntiAlias(true);
-        eraser.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-        float width = (float) getWidth();
-        float height =  getHeight();
-        RectF frame = new RectF(lineWidth, lineWidth, width-lineWidth, height-lineWidth);
-        Path path = new Path();
-        Paint stroke = new Paint();
-        stroke.setAntiAlias(true);
-        stroke.setStrokeWidth(lineWidth);
-        stroke.setColor(Color.WHITE);
-        stroke.setStyle(Paint.Style.STROKE);
-        path.addRoundRect(frame, this.cornerRadius, this.cornerRadius, Path.Direction.CW);
-        canvas.drawPath(path, stroke);
-        canvas.drawRoundRect(frame, this.cornerRadius, this.cornerRadius, eraser);
     }
 
     public void setCornerRadius(float cornerRadius) {
