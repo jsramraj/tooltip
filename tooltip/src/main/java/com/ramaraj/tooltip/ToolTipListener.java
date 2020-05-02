@@ -8,4 +8,8 @@ public class ToolTipListener {
     public interface ToolTipOnShowListener {
         void onTipShown(ToolTip tip);
     }
+
+    public interface ToolTipConfigChange {
+        ToolTipConfig configForTip(ToolTip tip);
+    }
 }

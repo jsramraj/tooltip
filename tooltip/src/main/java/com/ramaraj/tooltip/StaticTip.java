@@ -3,6 +3,7 @@ package com.ramaraj.tooltip;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -40,6 +41,11 @@ public class StaticTip extends ToolTip implements IToolTip {
         Button nextButton = tipView.findViewById(R.id.nextButton);
 
         tipTextView.setText(tipText);
+        if (activity instanceof ToolTipListener.ToolTipConfigChange) {
+            ToolTipConfig config = ((ToolTipListener.ToolTipConfigChange) activity).configForTip(this);
+            if (config != null && config.getStyleResId() > 0)
+                tipTextView.setTextAppearance(config.getStyleResId());
+        }
 
         Rect targetViewFrame = new Rect();
         targetView.getGlobalVisibleRect(targetViewFrame);

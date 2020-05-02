@@ -9,9 +9,10 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ramaraj.tooltip.ToolTip;
+import com.ramaraj.tooltip.ToolTipConfig;
 import com.ramaraj.tooltip.ToolTipListener;
 
-public class LoginActivity extends AppCompatActivity implements ToolTipListener.ToolTipOnShowListener {
+public class LoginActivity extends AppCompatActivity implements ToolTipListener.ToolTipOnShowListener, ToolTipListener.ToolTipConfigChange {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,5 +32,15 @@ public class LoginActivity extends AppCompatActivity implements ToolTipListener.
     @Override
     public void onTipShown(ToolTip tip) {
         Log.d("TTA", String.format("Tip shown for Id:%s with text:%s for activity:%s", tip.getResourceId(), tip.getTipText(), tip.getActivityName()));
+    }
+
+    @Override
+    public ToolTipConfig configForTip(ToolTip tip) {
+        if (tip.getResourceId() == R.id.etEmail) {
+            ToolTipConfig config = new ToolTipConfig();
+            config.setStyleResId(R.style.emailTipTextStyle);
+            return config;
+        }
+        return null;
     }
 }
