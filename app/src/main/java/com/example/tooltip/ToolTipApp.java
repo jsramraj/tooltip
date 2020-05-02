@@ -31,15 +31,23 @@ public class ToolTipApp extends Application {
                 JSONArray data = obj.getJSONArray(key);
 
                 ArrayList<String> identifiers = new ArrayList<>();
+                ArrayList<String> titles = new ArrayList<>();
                 ArrayList<String> tips = new ArrayList<>();
 
                 for (int i = 0; i < data.length(); i++) {
                     JSONObject tipObject = data.getJSONObject(i);
                     identifiers.add(tipObject.getString("id"));
+                    if (tipObject.has("title"))
+                        titles.add(tipObject.getString("title"));
+                    else
+                        titles.add("");
                     tips.add(tipObject.getString("tip"));
                 }
 
-                tipComposerBuilder.addStaticTips(key, identifiers.toArray(new String[0]), tips.toArray(new String[0]));
+                tipComposerBuilder.addStaticTips(key,
+                        identifiers.toArray(new String[0]),
+                        titles.toArray(new String[0]),
+                        tips.toArray(new String[0]));
             }
             Log.d("TTA", String.valueOf(obj));
         } catch (JSONException e) {

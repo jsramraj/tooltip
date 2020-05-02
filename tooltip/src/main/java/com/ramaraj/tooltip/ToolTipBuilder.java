@@ -12,10 +12,10 @@ public class ToolTipBuilder {
         allTips = new HashMap<>();
     }
 
-    public void addStaticTips(String activityName, int[] identifiers, String[] tipsText) {
+    public void addStaticTips(String activityName, int[] identifiers, String[] tipsTitles, String[] tipsText) {
         List<StaticTip> tipsForActivity = staticTipsForActivity(activityName);
         for (int index = 0; index < identifiers.length; index++) {
-            StaticTip tip = new StaticTip(activityName, identifiers[index], tipsText[index]);
+            StaticTip tip = new StaticTip(activityName, identifiers[index], tipsTitles[index], tipsText[index]);
             tipsForActivity.add(tip);
         }
         allTips.put(activityName, tipsForActivity);

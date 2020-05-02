@@ -20,14 +20,17 @@
     },
     {
       "id": "etPassword",
+      "title": "Password",
       "tip": "Password should contain atleast 8 characters long"
     },
     {
       "id": "checkboxRemember",
+      "title": "Remember Me",
       "tip": "Check this to persist your session details"
     },
     {
       "id": "btnLogin",
+      "title": "Login",
       "tip": "Tap this after you enter valid credentials"
     },
     {

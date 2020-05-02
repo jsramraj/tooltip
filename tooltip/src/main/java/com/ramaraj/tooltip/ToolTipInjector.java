@@ -21,7 +21,10 @@ public class ToolTipInjector {
                 int[] identifiers = ResourceUtils.getResourceIdentifiers(activity, tipComposer.tipIdentifiers(activity.getLocalClassName()));
                 if (identifiers != null) {
                     tipBuilder = new ToolTipBuilder();
-                    tipBuilder.addStaticTips(activity.getLocalClassName(), identifiers, tipComposer.tipTexts(activity.getLocalClassName()));
+                    tipBuilder.addStaticTips(activity.getLocalClassName(),
+                            identifiers,
+                            tipComposer.tipTitles(activity.getLocalClassName()),
+                            tipComposer.tipTexts(activity.getLocalClassName()));
                 }
             }
 

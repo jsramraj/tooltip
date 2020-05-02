@@ -13,14 +13,15 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.ramaraj.tooltip.utils.StatusBarUtils;
+import com.ramaraj.tooltip.utils.StringUtils;
 
 public class StaticTip extends ToolTip implements IToolTip {
 
     private ToolTipListener.ToolTipOnDismissListener listener;
     private PopupWindow tipPopupWindow;
 
-    public StaticTip(String activityName, int resourceId, String tipText) {
-        super(activityName, resourceId, tipText);
+    public StaticTip(String activityName, int resourceId, String tipTitle, String tipText) {
+        super(activityName, resourceId, tipTitle, tipText);
     }
 
     @Override
@@ -70,13 +71,16 @@ public class StaticTip extends ToolTip implements IToolTip {
         tipTextViewParams.topMargin = holeViewLayoutParams.topMargin - height - bottomSpace;
         tipTextView.setLayoutParams(tipTextViewParams);
 
-
         tipTitleTextView.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         int titleHeight = tipTextView.getMeasuredHeight();
         FrameLayout.LayoutParams titleTitleParams = (FrameLayout.LayoutParams) tipTitleTextView.getLayoutParams();
         titleTitleParams.leftMargin = 0;
         titleTitleParams.topMargin = tipTextViewParams.topMargin - titleHeight;
         tipTitleTextView.setLayoutParams(titleTitleParams);
+
+        tipTitleTextView.setText(tipTitle);
+        tipTitleTextView.setVisibility(StringUtils.isNullOrEmpty(tipTitle) ? View.INVISIBLE : View.VISIBLE);
+
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
