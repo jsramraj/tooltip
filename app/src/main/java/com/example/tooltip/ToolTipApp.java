@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.ramaraj.tooltip.ToolTipComposer;
+import com.ramaraj.tooltip.ToolTipConfig;
 import com.ramaraj.tooltip.ToolTipInjector;
 
 import org.json.JSONArray;
@@ -12,17 +13,15 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.*;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 public class ToolTipApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
 
-        ToolTipComposer tipComposer = new ToolTipComposer();
+        ToolTipComposer.Builder tipComposerBuilder = new ToolTipComposer.Builder();
 
         try {
             JSONObject obj = new JSONObject(readJSONFromAsset());
@@ -40,15 +39,17 @@ public class ToolTipApp extends Application {
                     tips.add(tipObject.getString("tip"));
                 }
 
-                tipComposer.addStaticTips(key, identifiers.toArray(new String[0]), tips.toArray(new String[0]));
+                tipComposerBuilder.addStaticTips(key, identifiers.toArray(new String[0]), tips.toArray(new String[0]));
             }
             Log.d("TTA", String.valueOf(obj));
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        ToolTipConfig globalConfig = new ToolTipConfig();
+        globalConfig.setStyleResId(R.style.tipTextStyleGlobal);
+        tipComposerBuilder.setGlobalConfig(globalConfig);
 
-
-        ToolTipInjector.init(this, tipComposer);
+        ToolTipInjector.init(this, tipComposerBuilder.build());
     }
 
     public String readJSONFromAsset() {

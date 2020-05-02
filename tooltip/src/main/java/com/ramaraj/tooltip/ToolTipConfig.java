@@ -20,6 +20,10 @@ public class ToolTipConfig {
         return instance;
     }
 
+    public static void setInstance(ToolTipConfig instance) {
+        ToolTipConfig.instance = instance;
+    }
+
     private int styleResId;
 
     public int getStyleResId() {

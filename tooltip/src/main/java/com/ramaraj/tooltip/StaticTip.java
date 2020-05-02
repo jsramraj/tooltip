@@ -41,6 +41,9 @@ public class StaticTip extends ToolTip implements IToolTip {
         Button nextButton = tipView.findViewById(R.id.nextButton);
 
         tipTextView.setText(tipText);
+        if (ToolTipConfig.getInstance().getStyleResId() > 0) {
+            tipTextView.setTextAppearance(ToolTipConfig.getInstance().getStyleResId());
+        }
         if (activity instanceof ToolTipListener.ToolTipConfigChange) {
             ToolTipConfig config = ((ToolTipListener.ToolTipConfigChange) activity).configForTip(this);
             if (config != null && config.getStyleResId() > 0)
