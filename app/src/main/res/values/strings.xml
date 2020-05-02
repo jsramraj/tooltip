@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">ToolTip</string>
+    <string name="hint_email">Email</string>
+    <string name="btn_facebook">Facebook Login</string>
+    <string name="hint_pass">Password</string>
+    <string name="checkbox_remember">Remember me</string>
+    <string name="btn_login">Sign In</string>
+    <string name="forgot_pwd">Forgot password?</string>
+    <string name="btn_google">Google Login</string>
+    <string name="register">No account yet? Create on</string>
 </resources>

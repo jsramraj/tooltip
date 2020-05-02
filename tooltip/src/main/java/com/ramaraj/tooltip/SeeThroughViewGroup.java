@@ -99,5 +99,25 @@ public class SeeThroughViewGroup extends ViewGroup {
                 (float) viewportCornerRadius,
                 eraserPaint
         );
+        int lineWidth = 4;
+        Paint eraser = new Paint();
+        eraser.setAntiAlias(true);
+        eraser.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+        float width = (float) getWidth();
+        float height =  getHeight();
+        RectF frame = new RectF(lineWidth, lineWidth, width-lineWidth, height-lineWidth);
+        Path path = new Path();
+        Paint stroke = new Paint();
+        stroke.setAntiAlias(true);
+        stroke.setStrokeWidth(lineWidth);
+        stroke.setColor(Color.WHITE);
+        stroke.setStyle(Paint.Style.STROKE);
+        path.addRoundRect(frame, this.cornerRadius, this.cornerRadius, Path.Direction.CW);
+        canvas.drawPath(path, stroke);
+        canvas.drawRoundRect(frame, this.cornerRadius, this.cornerRadius, eraser);
+    }
+
+    public void setCornerRadius(float cornerRadius) {
+        this.cornerRadius = cornerRadius;
     }
 }

@@ -1,0 +1,42 @@
+{
+  "MainActivity": [
+    {
+      "id": "helloWorldLabel",
+      "tip": "Tips for hello world"
+    },
+    {
+      "id": "empName",
+      "tip": "Name of the logged in employee"
+    },
+    {
+      "id": "designation",
+      "tip": "Role of the employee in the company"
+    }
+  ],
+  "LoginActivity": [
+    {
+      "id": "etEmail",
+      "tip": "Enter a valid email address"
+    },
+    {
+      "id": "etPassword",
+      "tip": "Password should contain atleast 8 characters long"
+    },
+    {
+      "id": "checkboxRemember",
+      "tip": "Check this to persist your session details"
+    },
+    {
+      "id": "btnLogin",
+      "tip": "Tap this after you enter valid credentials"
+    },
+    {
+      "id": "tvRestore",
+      "tip": "This will open the reset password web page"
+    },
+    {
+      "id": "tvRegister",
+      "tip": "You can create a new account by tapping this button"
+    }
+  ]
+}

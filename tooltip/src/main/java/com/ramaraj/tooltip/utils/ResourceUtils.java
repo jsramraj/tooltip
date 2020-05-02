@@ -28,6 +28,8 @@ public class ResourceUtils {
     }
 
     public static int[] getResourceIdentifiers(Activity activity, String[] stringIdentifiers) {
+        if (stringIdentifiers == null || stringIdentifiers.length == 0)
+            return null;
         int[] identifiers = new int[stringIdentifiers.length];
 
         for (int i = 0; i < stringIdentifiers.length; i++) {

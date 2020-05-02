@@ -3,7 +3,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#80000400"
+    android:background="#D9000400"
     android:clickable="true"
     android:focusable="true">
 
@@ -15,13 +15,15 @@
 
     <TextView
         android:id="@+id/hint_text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_marginLeft="@dimen/margin_16dp"
         android:layout_marginRight="@dimen/margin_16dp"
         android:text="@string/tooltip_information"
         android:textColor="@android:color/holo_red_dark"
-        android:textSize="@dimen/text_size_16sp" />
+        android:textSize="@dimen/text_size_16sp"
+        android:textAppearance="@style/defaultTipTextStyle"/>
 
     <Button
         android:id="@+id/nextButton"
