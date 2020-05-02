@@ -2,6 +2,7 @@ package com.ramaraj.tooltip;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -28,10 +29,21 @@ public class StaticTip implements IToolTip {
         this.tipText = tipText;
     }
 
+    private int getStatusBarOffset(Context context) {
+        int result = 0;
+        Resources resources = context.getResources();
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = resources.getDimensionPixelSize(resourceId);
+        }
+
+        return result;
+    }
+
     @Override
     public void displayTip(Context context) {
         Activity activity = (Activity) context;
-        View view = activity.findViewById(resourceId);
+        View targetView = activity.findViewById(resourceId);
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -43,24 +55,28 @@ public class StaticTip implements IToolTip {
 
         tipTextView.setText(tipText);
 
-        Rect myViewRect2 = new Rect();
-        view.getGlobalVisibleRect(myViewRect2);
-        Log.d("TTA", String.valueOf(myViewRect2));
+        Rect targetViewFrame = new Rect();
+        targetView.getGlobalVisibleRect(targetViewFrame);
+        Log.d("TTA", String.valueOf(targetViewFrame));
 
         int pos[] = new int[2];
-        view.getLocationOnScreen(pos);
-        Log.d("TTA", String.format("%d, %d, %d, %d", pos[0], pos[1], view.getMeasuredWidth(), view.getMeasuredHeight()));
+        targetView.getLocationOnScreen(pos);
+        Log.d("TTA", String.format("%d, %d, %d, %d", pos[0], pos[1], targetView.getMeasuredWidth(), targetView.getMeasuredHeight()));
+
+        int padding = 20;
+        FrameLayout.LayoutParams param2 = (FrameLayout.LayoutParams) holeView.getLayoutParams();
+        param2.leftMargin = targetViewFrame.left - padding;
+        param2.topMargin = targetViewFrame.top - getStatusBarOffset(context) - padding;
+        param2.width = targetViewFrame.width() + 2 * padding;
+        param2.height = targetViewFrame.height() +2 * padding;
+        holeView.setCornerRadius(50);
+        holeView.setLayoutParams(param2);
 
         FrameLayout.LayoutParams param = (FrameLayout.LayoutParams) tipTextView.getLayoutParams();
-        param.leftMargin = pos[0];
-        param.topMargin = pos[1] - view.getMeasuredHeight() * 3;
-        param.height = view.getMeasuredHeight();
+        param.leftMargin = 0;
+        param.topMargin = param2.topMargin - param2.height;
+        param.height = targetView.getMeasuredHeight();
         tipTextView.setLayoutParams(param);
-
-        FrameLayout.LayoutParams param2 = (FrameLayout.LayoutParams) holeView.getLayoutParams();
-        param2.leftMargin = pos[0] + view.getMeasuredWidth() / 2 - param2.width/2;
-        param2.topMargin = pos[1] - view.getMeasuredHeight() * 2;
-        holeView.setLayoutParams(param2);
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +86,7 @@ public class StaticTip implements IToolTip {
         });
 
         tipPopupWindow = new PopupWindow(tipView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
-        tipPopupWindow.showAtLocation(view, Gravity.TOP|Gravity.RIGHT, 0, 0);
+        tipPopupWindow.showAtLocation(targetView, Gravity.TOP | Gravity.RIGHT, 0, 0);
     }
 
     @Override

@@ -44,7 +44,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="6dp"
-            android:background="@android:color/holo_blue_bright"
             android:text="@string/btn_login" />
 
         <TextView

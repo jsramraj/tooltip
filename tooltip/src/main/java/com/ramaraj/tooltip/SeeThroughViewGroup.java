@@ -12,6 +12,8 @@ import android.util.AttributeSet;
 import android.view.ViewGroup;
 
 public class SeeThroughViewGroup extends ViewGroup {
+    float cornerRadius = 20;
+
     public SeeThroughViewGroup(Context context) {
         super(context);
     }
@@ -43,7 +45,6 @@ public class SeeThroughViewGroup extends ViewGroup {
         super.onDraw(canvas);
 
         int lineWidth = 4;
-        int viewportCornerRadius = getWidth() / 2;
         Paint eraser = new Paint();
         eraser.setAntiAlias(true);
         eraser.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
@@ -56,8 +57,12 @@ public class SeeThroughViewGroup extends ViewGroup {
         stroke.setStrokeWidth(lineWidth);
         stroke.setColor(Color.WHITE);
         stroke.setStyle(Paint.Style.STROKE);
-        path.addRoundRect(frame, (float) viewportCornerRadius, (float) viewportCornerRadius, Path.Direction.CW);
+        path.addRoundRect(frame, this.cornerRadius, this.cornerRadius, Path.Direction.CW);
         canvas.drawPath(path, stroke);
-        canvas.drawRoundRect(frame, (float) viewportCornerRadius, (float) viewportCornerRadius, eraser);
+        canvas.drawRoundRect(frame, this.cornerRadius, this.cornerRadius, eraser);
+    }
+
+    public void setCornerRadius(float cornerRadius) {
+        this.cornerRadius = cornerRadius;
     }
 }

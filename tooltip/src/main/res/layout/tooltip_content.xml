@@ -7,7 +7,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#99000400"
+        android:background="#BF000400"
         android:clickable="true"
         android:focusable="true">
 
@@ -19,11 +19,12 @@
 
         <TextView
             android:id="@+id/hint_text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="20sp"
             android:text="Hello Boy"
-            android:textColor="@android:color/holo_red_dark" />
+            android:gravity="center"
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/nextButton"
