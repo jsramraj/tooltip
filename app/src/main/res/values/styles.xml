@@ -22,4 +22,10 @@
         <item name="android:textSize">25sp</item>
     </style>
 
+    <style name="tipTitleTextStyleGlobal">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textColor">#ffff00</item>
+        <item name="android:textSize">35sp</item>
+    </style>
+
 </resources>

@@ -80,6 +80,16 @@ public class StaticTip extends ToolTip implements IToolTip {
 
         tipTitleTextView.setText(tipTitle);
         tipTitleTextView.setVisibility(StringUtils.isNullOrEmpty(tipTitle) ? View.INVISIBLE : View.VISIBLE);
+        if (!StringUtils.isNullOrEmpty(tipTitle)) {
+            if (ToolTipConfig.getInstance().getTipTitleTextStyleResId() > 0) {
+                tipTitleTextView.setTextAppearance(ToolTipConfig.getInstance().getTipTitleTextStyleResId());
+            }
+            if (activity instanceof ToolTipListener.ToolTipConfigChange) {
+                ToolTipConfig config = ((ToolTipListener.ToolTipConfigChange) activity).configForTip(this);
+                if (config != null && config.getTipTitleTextStyleResId() > 0)
+                    tipTitleTextView.setTextAppearance(config.getTipTitleTextStyleResId());
+            }
+        }
 
 
         nextButton.setOnClickListener(new View.OnClickListener() {

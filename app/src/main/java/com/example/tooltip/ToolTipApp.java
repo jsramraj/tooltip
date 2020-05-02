@@ -53,8 +53,10 @@ public class ToolTipApp extends Application {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         ToolTipConfig globalConfig = new ToolTipConfig();
         globalConfig.setTipTextStyleResId(R.style.tipTextStyleGlobal);
+        globalConfig.setTipTitleTextStyleResId(R.style.tipTitleTextStyleGlobal);
         tipComposerBuilder.setGlobalConfig(globalConfig);
 
         ToolTipInjector.init(this, tipComposerBuilder.build());

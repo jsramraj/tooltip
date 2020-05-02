@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="defaultTipTextStyle">
-        <item name="android:fontFamily">casual</item>
+        <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">20sp</item>
     </style>
 
     <style name="defaultTipTitleStyle">
-        <item name="android:fontFamily">casual</item>
+        <item name="android:fontFamily">sans-serif-black</item>
         <item name="android:textColor">#ffff00</item>
         <item name="android:textSize">25sp</item>
     </style>
