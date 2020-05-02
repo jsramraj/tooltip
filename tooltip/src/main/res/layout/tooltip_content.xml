@@ -14,6 +14,14 @@
         android:background="@android:color/transparent" />
 
     <TextView
+        android:id="@+id/tip_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/tooltip_title"
+        android:textAppearance="@style/defaultTipTitleStyle"/>
+
+    <TextView
         android:id="@+id/hint_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,8 +29,6 @@
         android:layout_marginLeft="@dimen/margin_16dp"
         android:layout_marginRight="@dimen/margin_16dp"
         android:text="@string/tooltip_information"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="@dimen/text_size_16sp"
         android:textAppearance="@style/defaultTipTextStyle"/>
 
     <Button

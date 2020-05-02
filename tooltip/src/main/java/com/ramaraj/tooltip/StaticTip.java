@@ -33,6 +33,7 @@ public class StaticTip extends ToolTip implements IToolTip {
 
         View tipView = LayoutInflater.from(activity).inflate(R.layout.tooltip_content, null);
         TextView tipTextView = tipView.findViewById(R.id.hint_text);
+        TextView tipTitleTextView = tipView.findViewById(R.id.tip_title);
         SeeThroughViewGroup holeView = tipView.findViewById(R.id.see_through_view);
         Button nextButton = tipView.findViewById(R.id.nextButton);
 
@@ -57,18 +58,25 @@ public class StaticTip extends ToolTip implements IToolTip {
         holeViewLayoutParams.leftMargin = targetViewFrame.left - paddingForRect;
         holeViewLayoutParams.topMargin = targetViewFrame.top - StatusBarUtils.getStatusBarOffset(activity) - paddingForRect;
         holeViewLayoutParams.width = targetViewFrame.width() + 2 * paddingForRect;
-        holeViewLayoutParams.height = targetViewFrame.height() +2 * paddingForRect;
+        holeViewLayoutParams.height = targetViewFrame.height() + 2 * paddingForRect;
         holeView.setCornerRadius(50);
         holeView.setLayoutParams(holeViewLayoutParams);
 
         tipTextView.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         int height = tipTextView.getMeasuredHeight();
         int bottomSpace = 50;
-
         FrameLayout.LayoutParams tipTextViewParams = (FrameLayout.LayoutParams) tipTextView.getLayoutParams();
         tipTextViewParams.leftMargin = 0;
-        tipTextViewParams.topMargin = holeViewLayoutParams.topMargin-height-bottomSpace;
+        tipTextViewParams.topMargin = holeViewLayoutParams.topMargin - height - bottomSpace;
         tipTextView.setLayoutParams(tipTextViewParams);
+
+
+        tipTitleTextView.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        int titleHeight = tipTextView.getMeasuredHeight();
+        FrameLayout.LayoutParams titleTitleParams = (FrameLayout.LayoutParams) tipTitleTextView.getLayoutParams();
+        titleTitleParams.leftMargin = 0;
+        titleTitleParams.topMargin = tipTextViewParams.topMargin - titleHeight;
+        tipTitleTextView.setLayoutParams(titleTitleParams);
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override

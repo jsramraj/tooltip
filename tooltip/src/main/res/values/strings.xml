@@ -4,4 +4,5 @@
     <string name="tooltip_information">Tooltip information</string>
     <string name="next">Next</string>
     <string name="done">Done</string>
+    <string name="tooltip_title">Title</string>
 </resources>
