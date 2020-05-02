@@ -1,8 +1,16 @@
 package com.ramaraj.tooltip;
 
-import android.content.Context;
+import android.app.Activity;
 
 public interface IToolTip {
-    void displayTip(Context context);
+
+    /**
+     * @param activity to display the tooltip view
+     */
+    void displayTip(Activity activity);
+
+    /**
+     * dismissing the tooltip view
+     */
     void dismissTip();
 }

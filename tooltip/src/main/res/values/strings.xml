@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ToolTip</string>
+
+    <string name="tooltip_information">Tooltip information</string>
+    <string name="next">Next</string>
+    <string name="done">Done</string>
 </resources>

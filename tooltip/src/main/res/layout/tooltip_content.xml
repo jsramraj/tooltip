@@ -1,35 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="#80000400"
+    android:clickable="true"
+    android:focusable="true">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#80000400"
-        android:clickable="true"
-        android:focusable="true">
+    <com.ramaraj.tooltip.SeeThroughViewGroup
+        android:id="@+id/see_through_view"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent" />
 
-        <com.ramaraj.tooltip.SeeThroughViewGroup
-            android:id="@+id/see_through_view"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@android:color/transparent" />
+    <TextView
+        android:id="@+id/hint_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
+        android:text="@string/tooltip_information"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="@dimen/text_size_16sp" />
 
-        <TextView
-            android:id="@+id/hint_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20sp"
-            android:text="Hello Boy"
-            android:textColor="@android:color/holo_red_dark" />
-
-        <Button
-            android:id="@+id/nextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text="Next" />
-    </FrameLayout>
-</LinearLayout>
+    <Button
+        android:id="@+id/nextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:text="@string/next" />
+</FrameLayout>

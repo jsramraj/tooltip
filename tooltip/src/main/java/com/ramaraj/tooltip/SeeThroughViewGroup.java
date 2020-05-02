@@ -11,9 +11,23 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 
+/**
+ * Constructing the component highlight view for tooltip.
+ */
 public class SeeThroughViewGroup extends ViewGroup {
+
+    private static final int STROKE_LINE_WIDTH = 4;
+    private static final int STROKE_LINE_HEIGHT = 4;
+
+    private Paint strokePaint = null;
+    private Paint eraserPaint = null;
+
+    private Path paintPath = null;
+
+    private RectF rectFrame = new RectF();
+
     public SeeThroughViewGroup(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public SeeThroughViewGroup(Context context, AttributeSet attrs) {
@@ -22,6 +36,22 @@ public class SeeThroughViewGroup extends ViewGroup {
 
     public SeeThroughViewGroup(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        initialize();
+    }
+
+    private void initialize() {
+
+        paintPath = new Path();
+
+        strokePaint = new Paint();
+        strokePaint.setAntiAlias(true);
+        strokePaint.setStrokeWidth(STROKE_LINE_WIDTH);
+        strokePaint.setColor(Color.WHITE);
+        strokePaint.setStyle(Paint.Style.STROKE);
+
+        eraserPaint = new Paint();
+        eraserPaint.setAntiAlias(true);
+        eraserPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
     }
 
     @Override
@@ -42,22 +72,32 @@ public class SeeThroughViewGroup extends ViewGroup {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        int lineWidth = 4;
         int viewportCornerRadius = getWidth() / 2;
-        Paint eraser = new Paint();
-        eraser.setAntiAlias(true);
-        eraser.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-        float width = (float) getWidth();
-        float height =  getHeight();
-        RectF frame = new RectF(lineWidth, lineWidth, width-lineWidth, height-lineWidth);
-        Path path = new Path();
-        Paint stroke = new Paint();
-        stroke.setAntiAlias(true);
-        stroke.setStrokeWidth(lineWidth);
-        stroke.setColor(Color.WHITE);
-        stroke.setStyle(Paint.Style.STROKE);
-        path.addRoundRect(frame, (float) viewportCornerRadius, (float) viewportCornerRadius, Path.Direction.CW);
-        canvas.drawPath(path, stroke);
-        canvas.drawRoundRect(frame, (float) viewportCornerRadius, (float) viewportCornerRadius, eraser);
+
+        float width = getWidth();
+        float height = getHeight();
+
+        rectFrame.set(
+                STROKE_LINE_WIDTH,
+                STROKE_LINE_HEIGHT,
+                width - STROKE_LINE_WIDTH,
+                height - STROKE_LINE_WIDTH
+        );
+
+        paintPath.addRoundRect(
+                rectFrame,
+                (float) viewportCornerRadius,
+                (float) viewportCornerRadius,
+                Path.Direction.CW
+        );
+
+        canvas.drawPath(paintPath, strokePaint);
+
+        canvas.drawRoundRect(
+                rectFrame,
+                (float) viewportCornerRadius,
+                (float) viewportCornerRadius,
+                eraserPaint
+        );
     }
 }
