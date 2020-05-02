@@ -1,12 +1,8 @@
 package com.ramaraj.tooltip;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,13 +37,13 @@ public class StaticTip extends ToolTip implements IToolTip {
         Button nextButton = tipView.findViewById(R.id.nextButton);
 
         tipTextView.setText(tipText);
-        if (ToolTipConfig.getInstance().getStyleResId() > 0) {
-            tipTextView.setTextAppearance(ToolTipConfig.getInstance().getStyleResId());
+        if (ToolTipConfig.getInstance().getTipTextStyleResId() > 0) {
+            tipTextView.setTextAppearance(ToolTipConfig.getInstance().getTipTextStyleResId());
         }
         if (activity instanceof ToolTipListener.ToolTipConfigChange) {
             ToolTipConfig config = ((ToolTipListener.ToolTipConfigChange) activity).configForTip(this);
-            if (config != null && config.getStyleResId() > 0)
-                tipTextView.setTextAppearance(config.getStyleResId());
+            if (config != null && config.getTipTextStyleResId() > 0)
+                tipTextView.setTextAppearance(config.getTipTextStyleResId());
         }
 
         Rect targetViewFrame = new Rect();

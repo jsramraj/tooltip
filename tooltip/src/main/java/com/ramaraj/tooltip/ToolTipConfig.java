@@ -5,6 +5,7 @@ public class ToolTipConfig {
     private static final Object lock = new Object();
 
     public ToolTipConfig() {
+        tipTextStyleResId = R.style.defaultTipTextStyle;
     }
 
     public static ToolTipConfig getInstance() {
@@ -24,13 +25,13 @@ public class ToolTipConfig {
         ToolTipConfig.instance = instance;
     }
 
-    private int styleResId;
+    private int tipTextStyleResId;
 
-    public int getStyleResId() {
-        return styleResId;
+    public int getTipTextStyleResId() {
+        return tipTextStyleResId;
     }
 
-    public void setStyleResId(int styleResId) {
-        this.styleResId = styleResId;
+    public void setTipTextStyleResId(int tipTextStyleResId) {
+        this.tipTextStyleResId = tipTextStyleResId;
     }
 }

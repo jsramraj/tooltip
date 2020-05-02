@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity implements ToolTipListener.
     public ToolTipConfig configForTip(ToolTip tip) {
         if (tip.getResourceId() == R.id.etEmail) {
             ToolTipConfig config = new ToolTipConfig();
-            config.setStyleResId(R.style.emailTipTextStyle);
+            config.setTipTextStyleResId(R.style.emailTipTextStyle);
             return config;
         }
         return null;
