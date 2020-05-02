@@ -15,6 +15,8 @@ import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.ramaraj.tooltip.utils.StatusBarUtils;
+
 public class StaticTip extends ToolTip implements IToolTip {
 
     private ToolTipListener.ToolTipOnDismissListener listener;
@@ -22,17 +24,6 @@ public class StaticTip extends ToolTip implements IToolTip {
 
     public StaticTip(String activityName, int resourceId, String tipText) {
         super(activityName, resourceId, tipText);
-    }
-
-    private int getStatusBarOffset(Context context) {
-        int result = 0;
-        Resources resources = context.getResources();
-        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = resources.getDimensionPixelSize(resourceId);
-        }
-
-        return result;
     }
 
     @Override
@@ -52,26 +43,27 @@ public class StaticTip extends ToolTip implements IToolTip {
 
         Rect targetViewFrame = new Rect();
         targetView.getGlobalVisibleRect(targetViewFrame);
-        Log.d("TTA", String.valueOf(targetViewFrame));
 
         int pos[] = new int[2];
         targetView.getLocationOnScreen(pos);
-        Log.d("TTA", String.format("%d, %d, %d, %d", pos[0], pos[1], targetView.getMeasuredWidth(), targetView.getMeasuredHeight()));
 
-        int padding = 20;
-        FrameLayout.LayoutParams param2 = (FrameLayout.LayoutParams) holeView.getLayoutParams();
-        param2.leftMargin = targetViewFrame.left - padding;
-        param2.topMargin = targetViewFrame.top - getStatusBarOffset(context) - padding;
-        param2.width = targetViewFrame.width() + 2 * padding;
-        param2.height = targetViewFrame.height() +2 * padding;
+        int paddingForRect = 20;
+        FrameLayout.LayoutParams holeViewLayoutParams = (FrameLayout.LayoutParams) holeView.getLayoutParams();
+        holeViewLayoutParams.leftMargin = targetViewFrame.left - paddingForRect;
+        holeViewLayoutParams.topMargin = targetViewFrame.top - StatusBarUtils.getStatusBarOffset(context) - paddingForRect;
+        holeViewLayoutParams.width = targetViewFrame.width() + 2 * paddingForRect;
+        holeViewLayoutParams.height = targetViewFrame.height() +2 * paddingForRect;
         holeView.setCornerRadius(50);
-        holeView.setLayoutParams(param2);
+        holeView.setLayoutParams(holeViewLayoutParams);
 
-        FrameLayout.LayoutParams param = (FrameLayout.LayoutParams) tipTextView.getLayoutParams();
-        param.leftMargin = 0;
-        param.topMargin = param2.topMargin - param2.height;
-        param.height = targetView.getMeasuredHeight();
-        tipTextView.setLayoutParams(param);
+        tipTextView.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        int height = tipTextView.getMeasuredHeight();
+        int bottomSpace = 50;
+
+        FrameLayout.LayoutParams tipTextViewParams = (FrameLayout.LayoutParams) tipTextView.getLayoutParams();
+        tipTextViewParams.leftMargin = 0;
+        tipTextViewParams.topMargin = holeViewLayoutParams.topMargin-height-bottomSpace;
+        tipTextView.setLayoutParams(tipTextViewParams);
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override

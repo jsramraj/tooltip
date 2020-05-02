@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="20sp"
             android:text="Hello Boy"
+            android:textSize="@dimen/tip_text_size"
             android:gravity="center"
             android:textColor="@android:color/white" />
 
