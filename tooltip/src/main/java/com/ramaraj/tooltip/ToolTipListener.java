@@ -1,5 +1,11 @@
 package com.ramaraj.tooltip;
 
-public interface ToolTipListener {
-    void onTipDismissed(IToolTip tip);
+public class ToolTipListener {
+    public interface ToolTipOnDismissListener {
+        void onTipDismissed(ToolTip tip);
+    }
+
+    public interface ToolTipOnShowListener {
+        void onTipShown(ToolTip tip);
+    }
 }

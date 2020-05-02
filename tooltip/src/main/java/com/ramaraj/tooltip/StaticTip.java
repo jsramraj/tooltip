@@ -15,18 +15,13 @@ import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-public class StaticTip implements IToolTip {
+public class StaticTip extends ToolTip implements IToolTip {
 
-    private final int resourceId;
-    private final String tipText;
-    private final String activityName;
-    private ToolTipListener listener;
+    private ToolTipListener.ToolTipOnDismissListener listener;
     private PopupWindow tipPopupWindow;
 
     public StaticTip(String activityName, int resourceId, String tipText) {
-        this.activityName = activityName;
-        this.resourceId = resourceId;
-        this.tipText = tipText;
+        super(activityName, resourceId, tipText);
     }
 
     private int getStatusBarOffset(Context context) {
@@ -42,7 +37,7 @@ public class StaticTip implements IToolTip {
 
     @Override
     public void displayTip(Context context) {
-        Activity activity = (Activity) context;
+        final Activity activity = (Activity) context;
         View targetView = activity.findViewById(resourceId);
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -87,6 +82,10 @@ public class StaticTip implements IToolTip {
 
         tipPopupWindow = new PopupWindow(tipView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
         tipPopupWindow.showAtLocation(targetView, Gravity.TOP | Gravity.RIGHT, 0, 0);
+
+        if (activity instanceof ToolTipListener.ToolTipOnShowListener) {
+            ((ToolTipListener.ToolTipOnShowListener) activity).onTipShown(StaticTip.this);
+        }
     }
 
     @Override
@@ -99,7 +98,7 @@ public class StaticTip implements IToolTip {
         }
     }
 
-    public void setListener(ToolTipListener listener) {
+    public void setListener(ToolTipListener.ToolTipOnDismissListener listener) {
         this.listener = listener;
     }
 }

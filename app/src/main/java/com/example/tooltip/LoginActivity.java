@@ -2,12 +2,16 @@ package com.example.tooltip;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class LoginActivity extends AppCompatActivity {
+import com.ramaraj.tooltip.ToolTip;
+import com.ramaraj.tooltip.ToolTipListener;
+
+public class LoginActivity extends AppCompatActivity implements ToolTipListener.ToolTipOnShowListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,5 +26,10 @@ public class LoginActivity extends AppCompatActivity {
                 LoginActivity.this.startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onTipShown(ToolTip tip) {
+        Log.d("TTA", "Tip shown " + tip.getTipText());
     }
 }

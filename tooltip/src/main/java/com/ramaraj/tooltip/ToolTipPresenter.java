@@ -4,7 +4,7 @@ import android.app.Activity;
 
 import java.util.List;
 
-public class ToolTipPresenter implements ToolTipListener {
+public class ToolTipPresenter implements ToolTipListener.ToolTipOnDismissListener {
     private List<StaticTip> toolTips;
     private Activity activity;
 
@@ -25,7 +25,7 @@ public class ToolTipPresenter implements ToolTipListener {
     }
 
     @Override
-    public void onTipDismissed(IToolTip tip) {
+    public void onTipDismissed(ToolTip tip) {
         if (toolTips.size() > 0) {
             toolTips.remove(0);
         }
