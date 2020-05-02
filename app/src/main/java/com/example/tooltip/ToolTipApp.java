@@ -23,9 +23,6 @@ public class ToolTipApp extends Application {
         super.onCreate();
 
         ToolTipComposer tipComposer = new ToolTipComposer();
-//        String[] identifiers = new String[]{"helloWorldLabel", String.valueOf(R.id.empName), "designation"};
-//        String[] tips = new String[]{"Tips for hello world", "Name of the logged in employee", "Role of the employee in the company"};
-//        tipComposer.addStaticTips("MainActivity", identifiers, tips);
 
         try {
             JSONObject obj = new JSONObject(readJSONFromAsset());

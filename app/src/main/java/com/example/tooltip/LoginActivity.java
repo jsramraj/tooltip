@@ -30,6 +30,6 @@ public class LoginActivity extends AppCompatActivity implements ToolTipListener.
 
     @Override
     public void onTipShown(ToolTip tip) {
-        Log.d("TTA", "Tip shown " + tip.getTipText());
+        Log.d("TTA", String.format("Tip shown for Id:%s with text:%s for activity:%s", tip.getResourceId(), tip.getTipText(), tip.getActivityName()));
     }
 }
