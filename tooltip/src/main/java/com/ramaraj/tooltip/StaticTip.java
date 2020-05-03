@@ -15,9 +15,8 @@ import android.widget.TextView;
 import com.ramaraj.tooltip.utils.StatusBarUtils;
 import com.ramaraj.tooltip.utils.StringUtils;
 
-public class StaticTip extends ToolTip implements IToolTip {
+public class StaticTip extends ToolTip {
 
-    private ToolTipListener.ToolTipOnDismissListener listener;
     private PopupWindow tipPopupWindow;
 
     public StaticTip(String activityName, int resourceId, String tipTitle, String tipText) {
@@ -105,19 +104,13 @@ public class StaticTip extends ToolTip implements IToolTip {
         if (activity instanceof ToolTipListener.ToolTipOnShowListener) {
             ((ToolTipListener.ToolTipOnShowListener) activity).onTipShown(StaticTip.this);
         }
+        super.displayTip(activity);
     }
 
     @Override
     public void dismissTip() {
         if (tipPopupWindow != null)
             tipPopupWindow.dismiss();
-
-        if (listener != null) {
-            listener.onTipDismissed(StaticTip.this);
-        }
-    }
-
-    public void setListener(ToolTipListener.ToolTipOnDismissListener listener) {
-        this.listener = listener;
+        super.dismissTip();
     }
 }

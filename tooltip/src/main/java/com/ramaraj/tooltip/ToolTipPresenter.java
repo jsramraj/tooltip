@@ -19,7 +19,7 @@ public class ToolTipPresenter implements ToolTipListener.ToolTipOnDismissListene
 
     private void showNextTip() {
         if (toolTips.size() > 0) {
-            toolTips.get(0).setListener(this);
+            toolTips.get(0).setOnDismissListener(this);
             toolTips.get(0).displayTip(activity);
         }
     }
