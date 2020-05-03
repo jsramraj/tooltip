@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.ramaraj.tooltip.ToolTip;
 import com.ramaraj.tooltip.ToolTipConfig;
 import com.ramaraj.tooltip.ToolTipListener;
+import com.ramaraj.tooltip.ToolTipManager;
 
 public class LoginActivity extends AppCompatActivity implements ToolTipListener.ToolTipOnShowListener, ToolTipListener.ToolTipConfigChange {
 
@@ -42,5 +43,13 @@ public class LoginActivity extends AppCompatActivity implements ToolTipListener.
             return config;
         }
         return null;
+    }
+
+    public void resetAllTips(View button) {
+        ToolTipManager.DataWrapper.resetAllAcknowledgements();
+    }
+
+    public void showTips(View button) {
+        ToolTipManager.ActivityWrapper.relaunchHelpForActivity(this);
     }
 }

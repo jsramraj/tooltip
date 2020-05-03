@@ -49,4 +49,22 @@ public class PersistentManager {
     public boolean isAcknowledged(String activityName, int resourceId) {
         return sharedPreferences.getBoolean(activityName + delimiter + resourceId, false);
     }
+
+    public boolean resetAllAcknowledgements() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        return editor.commit();
+    }
+
+    public boolean resetAcknowledgementForActivity(String activityName) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        for (String key : sharedPreferences.getAll().keySet()) {
+            if (key.startsWith(activityName)) {
+                editor.remove(key);
+            }
+        }
+
+        return editor.commit();
+    }
 }

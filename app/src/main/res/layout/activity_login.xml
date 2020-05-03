@@ -82,16 +82,32 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvRegister"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal"
-        android:clickable="true"
-        android:gravity="bottom"
-        android:text="@string/register"
-        android:textStyle="bold" />
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/resetTips"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:onClick="resetAllTips"
+            android:text="Reset all Tips"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/showTips"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:onClick="showTips"
+            android:text="Show Tips"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 </RelativeLayout>

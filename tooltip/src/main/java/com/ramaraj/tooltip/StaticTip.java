@@ -27,6 +27,10 @@ public class StaticTip extends ToolTip {
     public void displayTip(Activity activity) {
 
         View targetView = activity.findViewById(resourceId);
+        if (targetView == null) {
+            //No view with this id is found in the activity
+            return;
+        }
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);

@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.ramaraj.tooltip.ToolTipComposer;
 import com.ramaraj.tooltip.ToolTipConfig;
-import com.ramaraj.tooltip.ToolTipInjector;
+import com.ramaraj.tooltip.ToolTipManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,7 +59,7 @@ public class ToolTipApp extends Application {
         globalConfig.setTipTitleTextStyleResId(R.style.tipTitleTextStyleGlobal);
         tipComposerBuilder.setGlobalConfig(globalConfig);
 
-        ToolTipInjector.init(this, tipComposerBuilder.build());
+        ToolTipManager.init(this, tipComposerBuilder.build());
     }
 
     public String readJSONFromAsset() {
