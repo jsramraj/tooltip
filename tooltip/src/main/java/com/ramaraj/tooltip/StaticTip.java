@@ -101,9 +101,6 @@ public class StaticTip extends ToolTip {
         tipPopupWindow = new PopupWindow(tipView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
         tipPopupWindow.showAtLocation(targetView, Gravity.TOP | Gravity.RIGHT, 0, 0);
 
-        if (activity instanceof ToolTipListener.ToolTipOnShowListener) {
-            ((ToolTipListener.ToolTipOnShowListener) activity).onTipShown(StaticTip.this);
-        }
         super.displayTip(activity);
     }
 

@@ -2,6 +2,9 @@ package com.ramaraj.tooltip;
 
 import android.app.Activity;
 
+import androidx.annotation.CallSuper;
+import androidx.annotation.IdRes;
+
 public abstract class ToolTip {
     protected final int resourceId;
     protected final String tipTitle;
@@ -10,7 +13,7 @@ public abstract class ToolTip {
 
     protected ToolTipListener.ToolTipOnDismissListener onDismissListener;
 
-    public ToolTip(String activityName, int resourceId, String tipTitle, String tipText) {
+    public ToolTip(String activityName, @IdRes int resourceId, String tipTitle, String tipText) {
         this.resourceId = resourceId;
         this.tipTitle = tipTitle;
         this.tipText = tipText;
@@ -32,13 +35,17 @@ public abstract class ToolTip {
     /**
      * @param activity to display the tooltip view
      */
+    @CallSuper
     void displayTip(Activity activity) {
-
+        if (activity instanceof ToolTipListener.ToolTipOnShowListener) {
+            ((ToolTipListener.ToolTipOnShowListener) activity).onTipShown(this);
+        }
     }
 
     /**
      * dismissing the tooltip view
      */
+    @CallSuper
     void dismissTip() {
         if (onDismissListener != null) {
             onDismissListener.onTipDismissed(this);

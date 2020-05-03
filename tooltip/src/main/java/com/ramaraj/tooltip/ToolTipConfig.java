@@ -1,5 +1,7 @@
 package com.ramaraj.tooltip;
 
+import androidx.annotation.StyleRes;
+
 public class ToolTipConfig {
     private static ToolTipConfig instance;
     private static final Object lock = new Object();
@@ -33,7 +35,7 @@ public class ToolTipConfig {
         return tipTextStyleResId;
     }
 
-    public void setTipTextStyleResId(int tipTextStyleResId) {
+    public void setTipTextStyleResId(@StyleRes int tipTextStyleResId) {
         this.tipTextStyleResId = tipTextStyleResId;
     }
 
@@ -41,7 +43,7 @@ public class ToolTipConfig {
         return tipTitleTextStyleResId;
     }
 
-    public void setTipTitleTextStyleResId(int tipTitleTextStyleResId) {
+    public void setTipTitleTextStyleResId(@StyleRes int tipTitleTextStyleResId) {
         this.tipTitleTextStyleResId = tipTitleTextStyleResId;
     }
 }
