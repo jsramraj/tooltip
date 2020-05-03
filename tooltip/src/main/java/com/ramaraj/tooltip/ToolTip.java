@@ -50,6 +50,7 @@ public abstract class ToolTip {
         if (onDismissListener != null) {
             onDismissListener.onTipDismissed(this);
         }
+        PersistentManager.getInstance().acknowledge(activityName, resourceId);
     }
 
     public void setOnDismissListener(ToolTipListener.ToolTipOnDismissListener listener) {

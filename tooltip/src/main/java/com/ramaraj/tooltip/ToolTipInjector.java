@@ -15,6 +15,8 @@ public class ToolTipInjector {
     private static ToolTipBuilder tipBuilder;
 
     public static void init(final Application application, final ToolTipComposer tipComposer) {
+        PersistentManager.init(application);
+        
         application.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {

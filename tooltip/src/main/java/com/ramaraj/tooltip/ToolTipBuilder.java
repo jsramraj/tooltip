@@ -15,6 +15,11 @@ public class ToolTipBuilder {
     public void addStaticTips(String activityName, int[] identifiers, String[] tipsTitles, String[] tipsText) {
         List<StaticTip> tipsForActivity = staticTipsForActivity(activityName);
         for (int index = 0; index < identifiers.length; index++) {
+            if (PersistentManager.getInstance().isAcknowledged(activityName, identifiers[index])) {
+                //we have already shown the tip for this resource
+                //let's skip creating this tip
+                continue;
+            }
             StaticTip tip = new StaticTip(activityName, identifiers[index], tipsTitles[index], tipsText[index]);
             tipsForActivity.add(tip);
         }

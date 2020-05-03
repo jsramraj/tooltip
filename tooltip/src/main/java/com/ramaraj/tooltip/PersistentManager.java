@@ -34,19 +34,19 @@ public class PersistentManager {
         return instance;
     }
 
-    public boolean save(String activityName, int resourceId) {
+    public boolean acknowledge(String activityName, int resourceId) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(activityName + "delimiter" + resourceId, true);
+        editor.putBoolean(activityName + delimiter + resourceId, true);
         return editor.commit();
     }
 
-    public boolean reset(String activityName, int resourceId) {
+    public boolean resetAcknowledgement(String activityName, int resourceId) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove(activityName + "delimiter" + resourceId);
+        editor.remove(activityName + delimiter + resourceId);
         return editor.commit();
     }
 
     public boolean isAcknowledged(String activityName, int resourceId) {
-        return sharedPreferences.getBoolean(activityName + "delimiter" + resourceId, false);
+        return sharedPreferences.getBoolean(activityName + delimiter + resourceId, false);
     }
 }
