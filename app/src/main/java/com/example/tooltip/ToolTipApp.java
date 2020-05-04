@@ -1,20 +1,15 @@
 package com.example.tooltip;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.ramaraj.tooltip.ToolTipComposer;
 import com.ramaraj.tooltip.ToolTipConfig;
 import com.ramaraj.tooltip.ToolTipManager;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 public class ToolTipApp extends Application {
     @Override
@@ -22,23 +17,8 @@ public class ToolTipApp extends Application {
         super.onCreate();
 
         ToolTipComposer.Builder tipComposerBuilder = new ToolTipComposer.Builder();
-
         try {
-            JSONObject obj = new JSONObject(readJSONFromAsset());
-
-            for (Iterator<String> it = obj.keys(); it.hasNext(); ) {
-                String activityName = it.next();
-                JSONArray data = obj.getJSONArray(activityName);
-
-                for (int i = 0; i < data.length(); i++) {
-                    JSONObject tipObject = data.getJSONObject(i);
-                    tipComposerBuilder.addStaticTip(activityName,
-                            tipObject.getString("id"),
-                            tipObject.has("title") ? tipObject.getString("title") : "",
-                            tipObject.getString("message"));
-                }
-            }
-            Log.d("TTA", String.valueOf(obj));
+            tipComposerBuilder.addStaticTip(readJSONFromAsset());
         } catch (JSONException e) {
             e.printStackTrace();
         }

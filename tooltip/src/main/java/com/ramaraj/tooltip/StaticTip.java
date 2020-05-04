@@ -48,21 +48,21 @@ public class StaticTip extends ToolTip {
 
         // Inflate all the controls from the tip layout
         View tipView = LayoutInflater.from(activity).inflate(R.layout.tooltip_content, null);
-        TextView tipTextView = tipView.findViewById(R.id.hint_text);
+        TextView tipMessageTextView = tipView.findViewById(R.id.hint_text);
         TextView tipTitleTextView = tipView.findViewById(R.id.tip_title);
         SeeThroughViewGroup holeView = tipView.findViewById(R.id.see_through_view);
         Button nextButton = tipView.findViewById(R.id.nextButton);
 
-        tipTextView.setText(tipText);
+        tipMessageTextView.setText(tipText);
         // Check if custom style is found in activity level
         if (ToolTipConfig.getInstance().getTipMessageStyleResId() > 0) {
-            tipTextView.setTextAppearance(ToolTipConfig.getInstance().getTipMessageStyleResId());
+            tipMessageTextView.setTextAppearance(ToolTipConfig.getInstance().getTipMessageStyleResId());
         }
         // Check if custom style is found in global level
         if (activity instanceof ToolTipListener.ToolTipConfigChange) {
             ToolTipConfig config = ((ToolTipListener.ToolTipConfigChange) activity).configForTip(this);
             if (config != null && config.getTipMessageStyleResId() > 0)
-                tipTextView.setTextAppearance(config.getTipMessageStyleResId());
+                tipMessageTextView.setTextAppearance(config.getTipMessageStyleResId());
         }
 
         int pos[] = new int[2];// location of the target view
@@ -79,20 +79,20 @@ public class StaticTip extends ToolTip {
         holeView.setLayoutParams(holeViewLayoutParams);
 
         // set the frame for the tip description
-        tipTextView.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        int height = tipTextView.getMeasuredHeight();
-        int bottomSpace = 50;
-        FrameLayout.LayoutParams tipTextViewParams = (FrameLayout.LayoutParams) tipTextView.getLayoutParams();
+        tipMessageTextView.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        int height = tipMessageTextView.getMeasuredHeight();
+        int bottomSpace = 25;
+        FrameLayout.LayoutParams tipTextViewParams = (FrameLayout.LayoutParams) tipMessageTextView.getLayoutParams();
         tipTextViewParams.leftMargin = 0;
         tipTextViewParams.topMargin = holeViewLayoutParams.topMargin - height - bottomSpace;
-        tipTextView.setLayoutParams(tipTextViewParams);
+        tipMessageTextView.setLayoutParams(tipTextViewParams);
 
         // set the frame for the tip title
         tipTitleTextView.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        int titleHeight = tipTextView.getMeasuredHeight();
+        int titleHeight = tipMessageTextView.getMeasuredHeight();
         FrameLayout.LayoutParams titleTitleParams = (FrameLayout.LayoutParams) tipTitleTextView.getLayoutParams();
         titleTitleParams.leftMargin = 0;
-        titleTitleParams.topMargin = tipTextViewParams.topMargin - titleHeight;
+        titleTitleParams.topMargin = tipTextViewParams.topMargin - titleHeight - bottomSpace;
         tipTitleTextView.setLayoutParams(titleTitleParams);
 
         tipTitleTextView.setText(tipTitle);

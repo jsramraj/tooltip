@@ -1,7 +1,12 @@
 package com.ramaraj.tooltip;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import static com.ramaraj.tooltip.Constants.*;
@@ -83,6 +88,30 @@ public class ToolTipComposer {
             }
             tipsForActivity.add(tip);
             allTipData.put(activityName, tipsForActivity);
+            return this;
+        }
+
+        /**
+         * Construct the tip data from the json formatted tip data
+         * @param tipDataJson Tip data in Json format
+         * @see <a href="https://raw.githubusercontent.com/jsramraj/tooltip/master/app/src/main/assets/tooltip_data.json">Sample data</a>
+         * @return A {@code ToolTipComposer.Builder} object
+         * @throws JSONException if the json is not following standard mentioned in the above link. Check Sample data section.
+         */
+        public Builder addStaticTip(String tipDataJson) throws JSONException {
+            JSONObject jsonData = new JSONObject(tipDataJson);
+            for (Iterator<String> it = jsonData.keys(); it.hasNext(); ) {
+                String activityName = it.next();
+                JSONArray data = jsonData.getJSONArray(activityName);
+
+                for (int i = 0; i < data.length(); i++) {
+                    JSONObject tipObject = data.getJSONObject(i);
+                    this.addStaticTip(activityName,
+                            tipObject.getString(RESOURCE_ID_KEY),
+                            tipObject.has(TIP_TITLE_ID_KEY) ? tipObject.getString(TIP_TITLE_ID_KEY) : "",
+                            tipObject.getString(TIP_MESSAGE_ID_KEY));
+                }
+            }
             return this;
         }
 
