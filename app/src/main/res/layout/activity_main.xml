@@ -36,4 +36,25 @@
         app:layout_constraintStart_toStartOf="@+id/empName"
         app:layout_constraintTop_toBottomOf="@+id/empName" />
 
+    <Switch
+        android:id="@+id/otherDetailsSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Show other deails"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/designation" />
+
+    <TextView
+        android:id="@+id/otherDetailsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Other details"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/designation"
+        app:layout_constraintTop_toBottomOf="@+id/otherDetailsSwitch" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

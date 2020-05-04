@@ -5,6 +5,7 @@ import android.app.Application;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
@@ -27,7 +28,11 @@ public class ToolTipManager {
             }
 
             @Override
-            public void onActivityStarted(@NonNull final Activity activity) {
+            public void onActivityStarted(@NonNull Activity activity) {
+            }
+
+            @Override
+            public void onActivityResumed(@NonNull final Activity activity) {
                 View activityView = activity.findViewById(android.R.id.content);
                 activityView.post(new Runnable() {
                     @Override
@@ -38,12 +43,8 @@ public class ToolTipManager {
             }
 
             @Override
-            public void onActivityResumed(@NonNull Activity activity) {
-            }
-
-            @Override
             public void onActivityPaused(@NonNull Activity activity) {
-
+                ActivityWrapper.cleanUp();
             }
 
             @Override
@@ -66,13 +67,16 @@ public class ToolTipManager {
     public static class ActivityWrapper {
 
         static ToolTipComposer tipComposer;
+        static ToolTipPresenter toolTipPresenter;
+
         protected static void init(ToolTipComposer _tipComposer) {
             tipComposer = _tipComposer;
         }
 
         protected static void showTipsForActivity(Activity activity) {
             if (tipBuilder != null && tipBuilder.staticTipsForActivity(activity.getLocalClassName()).size() > 0) {
-                new ToolTipPresenter(tipBuilder, activity).displayStaticTipsForActivity();
+                toolTipPresenter = new ToolTipPresenter(tipBuilder, activity);
+                toolTipPresenter.displayStaticTipsForActivity();
             } else {
                 Log.e("TTA", "There are no tips registered for this activity");
             }
@@ -94,6 +98,10 @@ public class ToolTipManager {
             DataWrapper.resetAcknowledgementForActivity(activity.getLocalClassName());
             buildTipsForActivity(activity);
             showTipsForActivity(activity);
+        }
+
+        public static void cleanUp() {
+            toolTipPresenter.cleanUp();
         }
     }
 

@@ -11,6 +11,10 @@
     {
       "id": "designation",
       "tip": "Role of the employee in the company"
+    },
+    {
+      "id": "otherDetailsTextView",
+      "tip": "Some other details about the employee"
     }
   ],
   "LoginActivity": [

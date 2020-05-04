@@ -24,12 +24,19 @@ public class StaticTip extends ToolTip {
     }
 
     @Override
-    public void displayTip(Activity activity) {
+    public boolean displayTip(Activity activity) {
 
         View targetView = activity.findViewById(resourceId);
         if (targetView == null) {
             //No view with this id is found in the activity
-            return;
+            return false;
+        }
+
+        Rect targetViewFrame = new Rect();
+        targetView.getGlobalVisibleRect(targetViewFrame);
+        if (targetViewFrame.isEmpty()) {
+            //the view frame is not valid, or the view's visiblity status is .GONE
+            return false;
         }
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -50,9 +57,6 @@ public class StaticTip extends ToolTip {
             if (config != null && config.getTipTextStyleResId() > 0)
                 tipTextView.setTextAppearance(config.getTipTextStyleResId());
         }
-
-        Rect targetViewFrame = new Rect();
-        targetView.getGlobalVisibleRect(targetViewFrame);
 
         int pos[] = new int[2];
         targetView.getLocationOnScreen(pos);
@@ -105,7 +109,7 @@ public class StaticTip extends ToolTip {
         tipPopupWindow = new PopupWindow(tipView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
         tipPopupWindow.showAtLocation(targetView, Gravity.TOP | Gravity.RIGHT, 0, 0);
 
-        super.displayTip(activity);
+        return super.displayTip(activity);
     }
 
     @Override

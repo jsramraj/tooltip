@@ -36,10 +36,11 @@ public abstract class ToolTip {
      * @param activity to display the tooltip view
      */
     @CallSuper
-    void displayTip(Activity activity) {
+    boolean displayTip(Activity activity) {
         if (activity instanceof ToolTipListener.ToolTipOnShowListener) {
             ((ToolTipListener.ToolTipOnShowListener) activity).onTipShown(this);
         }
+        return true;
     }
 
     /**
