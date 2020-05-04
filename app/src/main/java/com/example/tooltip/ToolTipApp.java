@@ -54,6 +54,8 @@ public class ToolTipApp extends Application {
             e.printStackTrace();
         }
 
+        // customize the tooltips globally.
+        // this will override the default appearance of the tip
         ToolTipConfig globalConfig = new ToolTipConfig();
         globalConfig.setTipTextStyleResId(R.style.tipTextStyleGlobal);
         globalConfig.setTipTitleTextStyleResId(R.style.tipTitleTextStyleGlobal);

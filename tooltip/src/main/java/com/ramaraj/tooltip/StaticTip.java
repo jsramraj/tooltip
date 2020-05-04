@@ -15,6 +15,10 @@ import android.widget.TextView;
 import com.ramaraj.tooltip.utils.StatusBarUtils;
 import com.ramaraj.tooltip.utils.StringUtils;
 
+/**
+ * Tips for the static controls
+ * If multiple static tips are added, they will be shown one by one
+ */
 public class StaticTip extends ToolTip {
 
     private PopupWindow tipPopupWindow;
@@ -42,6 +46,7 @@ public class StaticTip extends ToolTip {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
+        // Inflate all the controls from the tip layout
         View tipView = LayoutInflater.from(activity).inflate(R.layout.tooltip_content, null);
         TextView tipTextView = tipView.findViewById(R.id.hint_text);
         TextView tipTitleTextView = tipView.findViewById(R.id.tip_title);
@@ -49,18 +54,21 @@ public class StaticTip extends ToolTip {
         Button nextButton = tipView.findViewById(R.id.nextButton);
 
         tipTextView.setText(tipText);
+        // Check if custom style is found in activity level
         if (ToolTipConfig.getInstance().getTipTextStyleResId() > 0) {
             tipTextView.setTextAppearance(ToolTipConfig.getInstance().getTipTextStyleResId());
         }
+        // Check if custom style is found in global level
         if (activity instanceof ToolTipListener.ToolTipConfigChange) {
             ToolTipConfig config = ((ToolTipListener.ToolTipConfigChange) activity).configForTip(this);
             if (config != null && config.getTipTextStyleResId() > 0)
                 tipTextView.setTextAppearance(config.getTipTextStyleResId());
         }
 
-        int pos[] = new int[2];
+        int pos[] = new int[2];// location of the target view
         targetView.getLocationOnScreen(pos);
 
+        // set the frame for the hole view
         int paddingForRect = 20;
         FrameLayout.LayoutParams holeViewLayoutParams = (FrameLayout.LayoutParams) holeView.getLayoutParams();
         holeViewLayoutParams.leftMargin = targetViewFrame.left - paddingForRect;
@@ -70,6 +78,7 @@ public class StaticTip extends ToolTip {
         holeView.setCornerRadius(50);
         holeView.setLayoutParams(holeViewLayoutParams);
 
+        // set the frame for the tip description
         tipTextView.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         int height = tipTextView.getMeasuredHeight();
         int bottomSpace = 50;
@@ -78,6 +87,7 @@ public class StaticTip extends ToolTip {
         tipTextViewParams.topMargin = holeViewLayoutParams.topMargin - height - bottomSpace;
         tipTextView.setLayoutParams(tipTextViewParams);
 
+        // set the frame for the tip title
         tipTitleTextView.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         int titleHeight = tipTextView.getMeasuredHeight();
         FrameLayout.LayoutParams titleTitleParams = (FrameLayout.LayoutParams) tipTitleTextView.getLayoutParams();
@@ -86,11 +96,14 @@ public class StaticTip extends ToolTip {
         tipTitleTextView.setLayoutParams(titleTitleParams);
 
         tipTitleTextView.setText(tipTitle);
+        // if the title for the tip is not registered, let's hide the tip title textview
         tipTitleTextView.setVisibility(StringUtils.isNullOrEmpty(tipTitle) ? View.INVISIBLE : View.VISIBLE);
         if (!StringUtils.isNullOrEmpty(tipTitle)) {
+            // Check if custom style is found in activity level
             if (ToolTipConfig.getInstance().getTipTitleTextStyleResId() > 0) {
                 tipTitleTextView.setTextAppearance(ToolTipConfig.getInstance().getTipTitleTextStyleResId());
             }
+            // Check if custom style is found in global level
             if (activity instanceof ToolTipListener.ToolTipConfigChange) {
                 ToolTipConfig config = ((ToolTipListener.ToolTipConfigChange) activity).configForTip(this);
                 if (config != null && config.getTipTitleTextStyleResId() > 0)

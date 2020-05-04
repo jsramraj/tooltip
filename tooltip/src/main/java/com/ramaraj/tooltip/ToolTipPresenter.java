@@ -6,19 +6,33 @@ import android.view.ViewTreeObserver;
 
 import java.util.List;
 
+/**
+ * Used to present the tips to the user
+ */
 public class ToolTipPresenter implements ToolTipListener.ToolTipOnDismissListener, ViewTreeObserver.OnGlobalLayoutListener {
     private List<StaticTip> toolTips;
     private Activity activity;
 
+    /**
+     * Construct the ToolTipPresenter
+     * @param builder The {@code ToolTipBuilder} object that has the array of the ToolTips
+     * @param activity Activity that calls this method
+     */
     public ToolTipPresenter(ToolTipBuilder builder, Activity activity) {
         this.toolTips = builder.staticTipsForActivity(activity.getLocalClassName());
         this.activity = activity;
     }
 
+    /**
+     * Starts displaying the static tips for the current activity one by one
+     */
     public void displayStaticTipsForActivity() {
         showNextTip();
     }
 
+    /**
+     * Show the next available static tip
+     */
     private void showNextTip() {
         for (ToolTip toolTip : toolTips) {
             boolean tipShown = toolTip.displayTip(activity);
@@ -41,11 +55,18 @@ public class ToolTipPresenter implements ToolTipListener.ToolTipOnDismissListene
         }
     }
 
+    /**
+     * If few of the target view is not yet displayed in the activity content view,
+     * this method observers for the view to appear and show the tip eventually
+     */
     private void observeForDeferredTips() {
         View activityView = activity.findViewById(android.R.id.content);
         activityView.getViewTreeObserver().addOnGlobalLayoutListener(this);
     }
 
+    /**
+     * Removes the global layout listener
+     */
     public void cleanUp () {
         View activityView = activity.findViewById(android.R.id.content);
         activityView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
@@ -61,6 +82,8 @@ public class ToolTipPresenter implements ToolTipListener.ToolTipOnDismissListene
 
     @Override
     public void onGlobalLayout() {
+        // View has been re-drawn.
+        // Check if any tips are present in the tipBuider
         showNextTip();
     }
 }

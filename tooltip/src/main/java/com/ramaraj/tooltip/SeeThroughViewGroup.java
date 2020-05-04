@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 /**
  * Constructing the component highlight view for tooltip.
+ * This creates a hole over the transparent background of the popup tip window
  */
 public class SeeThroughViewGroup extends ViewGroup {
 
