@@ -1,5 +1,7 @@
 package com.ramaraj.tooltip;
 
+import androidx.annotation.NonNull;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,8 +63,15 @@ public class ToolTipComposer {
          * @return A {@code ToolTipComposer.Builder} object
          */
         public Builder addStaticTips(String activityName, String[] identifiers, String[] titles, String[] messages) {
+            if (activityName == null || identifiers == null || titles == null) {
+                throw new NullPointerException("Missing mandatory values.");
+            }
+            if (identifiers.length != titles.length) {
+                throw new IllegalArgumentException("identifiers and titles should have the same number of objects");
+            }
             for (int i = 0; i < identifiers.length; i++) {
-                this.addStaticTip(activityName, identifiers[i], titles[i], messages[i]);
+                String message = (messages == null || messages.length == 0) ? "" : messages[i];
+                this.addStaticTip(activityName, identifiers[i], titles[i], message);
             }
             return this;
         }
@@ -99,6 +108,8 @@ public class ToolTipComposer {
          * @throws JSONException if the json is not following standard mentioned in the above link. Check Sample data section.
          */
         public Builder addStaticTip(String tipDataJson) throws JSONException {
+            if (tipDataJson == null)
+                throw new NullPointerException("Json value cannot be null");
             JSONObject jsonData = new JSONObject(tipDataJson);
             for (Iterator<String> it = jsonData.keys(); it.hasNext(); ) {
                 String activityName = it.next();
