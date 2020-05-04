@@ -7,7 +7,7 @@ Default view with optional title             |  Fully customizable |  Individual
 ![](./demo/optional-title.png)  |  ![](./demo/full-customization.png) |  ![](./demo/individual-customization.png)
 
 # Demo 
-![Demo](./demo/demo.gif)
+<img src="./demo/demo.gif" width="40%">
 
 
 # How this differs from other intro libraries?
