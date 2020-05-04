@@ -12,6 +12,9 @@ import androidx.annotation.Nullable;
 
 import com.ramaraj.tooltip.utils.ResourceUtils;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * The entry point to use the library from an app
  * Inject tips and app to the library
@@ -107,13 +110,16 @@ public class ToolTipManager {
          * @param activity The parent activity
          */
         protected static void buildTipsForActivity(Activity activity) {
-            int[] identifiers = ResourceUtils.getResourceIdentifiers(activity, tipComposer.tipIdentifiers(activity.getLocalClassName()));
-            if (identifiers != null) {
-                tipBuilder = new ToolTipBuilder();
-                tipBuilder.addStaticTips(activity.getLocalClassName(),
-                        identifiers,
-                        tipComposer.tipTitles(activity.getLocalClassName()),
-                        tipComposer.tipTexts(activity.getLocalClassName()));
+            List<HashMap<String, String>> tipsForActivity = tipComposer.getAllTipData().get(activity.getLocalClassName());
+            String activityName = activity.getLocalClassName();
+
+            tipBuilder = new ToolTipBuilder();
+            for (HashMap<String, String> tipData : tipsForActivity) {
+                int resourceIdentifier = ResourceUtils.getResourceId(activity, tipData.get(Constants.RESOURCE_ID_KEY));
+                tipBuilder.addStaticTip(activityName,
+                        resourceIdentifier,
+                        tipData.get(Constants.TIP_TITLE_ID_KEY),
+                        tipData.get(Constants.TIP_MESSAGE_ID_KEY));
             }
         }
 

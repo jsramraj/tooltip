@@ -1,6 +1,10 @@
 package com.ramaraj.tooltip;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import static com.ramaraj.tooltip.Constants.*;
 
 /**
  * Acts as an data source for the tooltip
@@ -9,56 +13,36 @@ import java.util.HashMap;
  */
 public class ToolTipComposer {
 
-    private HashMap<String, String[]> tipIdentifiers;
-    private HashMap<String, String[]> tipTitles;
-    private HashMap<String, String[]> tipsText;
+    private final HashMap<String, List<HashMap<String, String>>> allTipData;
 
     /**
      * Default constructor
      * Stores the resource id, title and text of the tip
-     * @param tipIdentifiers Array of resource id
-     * @param tipTitles Array of titles for the tip
-     * @param tipsText Array of the tip message
+     * @param allTipData All the trip data with key being the activity name
      * @param globalConfig App wide configuration for constructing the tips
      */
-    private ToolTipComposer(HashMap<String, String[]> tipIdentifiers,
-                            HashMap<String, String[]> tipTitles,
-                            HashMap<String, String[]> tipsText,
+    private ToolTipComposer(HashMap<String, List<HashMap<String, String>>> allTipData,
                             ToolTipConfig globalConfig) {
-        this.tipIdentifiers = tipIdentifiers;
-        this.tipTitles = tipTitles;
-        this.tipsText = tipsText;
+        this.allTipData = allTipData;
         ToolTipConfig.setInstance(globalConfig);
     }
 
-    public String[] tipIdentifiers(String activityName) {
-        return tipIdentifiers.get(activityName);
-    }
-
-    public String[] tipTitles(String activityName) {
-        return tipTitles.get(activityName);
-    }
-
-    public String[] tipTexts(String activityName) {
-        return tipsText.get(activityName);
+    public HashMap<String, List<HashMap<String, String>>> getAllTipData() {
+        return allTipData;
     }
 
     /**
      * Helper class to create the TipComposer object
      */
     public static class Builder {
-        private HashMap<String, String[]> tipIdentifiers;
-        private HashMap<String, String[]> tipTitles;
-        private HashMap<String, String[]> tipsText;
+        private HashMap<String, List<HashMap<String, String>>> allTipData;
         private ToolTipConfig globalConfig;
 
         /**
          * Default constructor
          */
         public Builder() {
-            this.tipIdentifiers = new HashMap<>();
-            this.tipTitles = new HashMap<>();
-            this.tipsText = new HashMap<>();
+            allTipData = new HashMap<>();
         }
 
         /**
@@ -66,13 +50,28 @@ public class ToolTipComposer {
          * @param activityName Local class name of the activity
          * @param identifiers Array of resource id
          * @param titles Array of titles for the tip
-         * @param tips Array of the tip message
+         * @param messages Array of the tip message
          * @return A {@code ToolTipComposer.Builder} object
          */
-        public Builder addStaticTips(String activityName, String[] identifiers, String[] titles, String[] tips) {
-            tipIdentifiers.put(activityName, identifiers);
-            tipTitles.put(activityName, titles);
-            tipsText.put(activityName, tips);
+        public Builder addStaticTips(String activityName, String[] identifiers, String[] titles, String[] messages) {
+            for (int i = 0; i < identifiers.length; i++) {
+                this.addStaticTip(activityName, identifiers[i], titles[i], messages[i]);
+            }
+            return this;
+        }
+
+        public Builder addStaticTip(String activityName, String resourceId, String title, String message) {
+            HashMap<String, String> tip = new HashMap<>();
+            tip.put(RESOURCE_ID_KEY, resourceId);
+            tip.put(TIP_TITLE_ID_KEY, title);
+            tip.put(TIP_MESSAGE_ID_KEY, message);
+
+            List<HashMap<String, String>> tipsForActivity = allTipData.get(activityName);
+            if (tipsForActivity == null) {
+                tipsForActivity = new ArrayList<>();
+            }
+            tipsForActivity.add(tip);
+            allTipData.put(activityName, tipsForActivity);
             return this;
         }
 
@@ -91,7 +90,7 @@ public class ToolTipComposer {
          * @return A new instance of {@code ToolTipComposer} class
          */
         public ToolTipComposer build() {
-            return new ToolTipComposer(tipIdentifiers, tipTitles, tipsText, globalConfig);
+            return new ToolTipComposer(allTipData, globalConfig);
         }
     }
 }

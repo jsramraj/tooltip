@@ -21,9 +21,9 @@ public class ToolTipBuilder {
      * It is required that all three arrays here are not null and have same length
      *
      * @param activityName Local class name of the activity
-     * @param identifiers Array of the resource id of the view for which the user has acknowledged the tip
-     * @param tipsTitles Array of the tip titles (Optional)
-     * @param tipsText Array of tip message
+     * @param identifiers  Array of the resource id of the view for which the user has acknowledged the tip
+     * @param tipsTitles   Array of the tip titles (Optional)
+     * @param tipsText     Array of tip message
      */
     public void addStaticTips(String activityName, int[] identifiers, String[] tipsTitles, String[] tipsText) {
         List<StaticTip> tipsForActivity = staticTipsForActivity(activityName);
@@ -34,6 +34,15 @@ public class ToolTipBuilder {
                 continue;
             }
             StaticTip tip = new StaticTip(activityName, identifiers[index], tipsTitles[index], tipsText[index]);
+            tipsForActivity.add(tip);
+        }
+        allTips.put(activityName, tipsForActivity);
+    }
+
+    public void addStaticTip(String activityName, int identifier, String title, String message) {
+        List<StaticTip> tipsForActivity = staticTipsForActivity(activityName);
+        if (!PersistentManager.getInstance().isAcknowledged(activityName, identifier)) {
+            StaticTip tip = new StaticTip(activityName, identifier, title, message);
             tipsForActivity.add(tip);
         }
         allTips.put(activityName, tipsForActivity);

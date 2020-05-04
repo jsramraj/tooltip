@@ -3,7 +3,6 @@ package com.ramaraj.tooltip.utils;
 import android.app.Activity;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ResourceUtils {
@@ -27,13 +26,13 @@ public class ResourceUtils {
         }
     }
 
-    public static int[] getResourceIdentifiers(Activity activity, String[] stringIdentifiers) {
-        if (stringIdentifiers == null || stringIdentifiers.length == 0)
+    public static int[] getResourceIdentifiers(Activity activity, List<String> stringIdentifiers) {
+        if (stringIdentifiers == null || stringIdentifiers.size() == 0)
             return null;
-        int[] identifiers = new int[stringIdentifiers.length];
+        int[] identifiers = new int[stringIdentifiers.size()];
 
-        for (int i = 0; i < stringIdentifiers.length; i++) {
-            identifiers[i] = getResourceId(activity, stringIdentifiers[i]);
+        for (int i = 0; i < stringIdentifiers.size(); i++) {
+            identifiers[i] = getResourceId(activity, stringIdentifiers.get(i));
         }
 
         return identifiers;
