@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity implements ToolTipListener.
         if (tip.getResourceId() == R.id.etEmail) {
             // to show home individual tips can be customized
             ToolTipConfig config = new ToolTipConfig();
-            config.setTipTextStyleResId(R.style.emailTipTextStyle);
+            config.setTipMessageStyleResId(R.style.emailTipTextStyle);
             return config;
         }
         return null;

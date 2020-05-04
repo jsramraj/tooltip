@@ -55,14 +55,14 @@ public class StaticTip extends ToolTip {
 
         tipTextView.setText(tipText);
         // Check if custom style is found in activity level
-        if (ToolTipConfig.getInstance().getTipTextStyleResId() > 0) {
-            tipTextView.setTextAppearance(ToolTipConfig.getInstance().getTipTextStyleResId());
+        if (ToolTipConfig.getInstance().getTipMessageStyleResId() > 0) {
+            tipTextView.setTextAppearance(ToolTipConfig.getInstance().getTipMessageStyleResId());
         }
         // Check if custom style is found in global level
         if (activity instanceof ToolTipListener.ToolTipConfigChange) {
             ToolTipConfig config = ((ToolTipListener.ToolTipConfigChange) activity).configForTip(this);
-            if (config != null && config.getTipTextStyleResId() > 0)
-                tipTextView.setTextAppearance(config.getTipTextStyleResId());
+            if (config != null && config.getTipMessageStyleResId() > 0)
+                tipTextView.setTextAppearance(config.getTipMessageStyleResId());
         }
 
         int pos[] = new int[2];// location of the target view
@@ -100,14 +100,14 @@ public class StaticTip extends ToolTip {
         tipTitleTextView.setVisibility(StringUtils.isNullOrEmpty(tipTitle) ? View.INVISIBLE : View.VISIBLE);
         if (!StringUtils.isNullOrEmpty(tipTitle)) {
             // Check if custom style is found in activity level
-            if (ToolTipConfig.getInstance().getTipTitleTextStyleResId() > 0) {
-                tipTitleTextView.setTextAppearance(ToolTipConfig.getInstance().getTipTitleTextStyleResId());
+            if (ToolTipConfig.getInstance().getTipTitleStyleResId() > 0) {
+                tipTitleTextView.setTextAppearance(ToolTipConfig.getInstance().getTipTitleStyleResId());
             }
             // Check if custom style is found in global level
             if (activity instanceof ToolTipListener.ToolTipConfigChange) {
                 ToolTipConfig config = ((ToolTipListener.ToolTipConfigChange) activity).configForTip(this);
-                if (config != null && config.getTipTitleTextStyleResId() > 0)
-                    tipTitleTextView.setTextAppearance(config.getTipTitleTextStyleResId());
+                if (config != null && config.getTipTitleStyleResId() > 0)
+                    tipTitleTextView.setTextAppearance(config.getTipTitleStyleResId());
             }
         }
 

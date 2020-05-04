@@ -2,48 +2,48 @@
   "MainActivity": [
     {
       "id": "helloWorldLabel",
-      "tip": "Tips for hello world"
+      "message": "Tips for hello world"
     },
     {
       "id": "empName",
-      "tip": "Name of the logged in employee"
+      "message": "Name of the logged in employee"
     },
     {
       "id": "designation",
-      "tip": "Role of the employee in the company"
+      "message": "Role of the employee in the company"
     },
     {
       "id": "otherDetailsTextView",
-      "tip": "Some other details about the employee"
+      "message": "Some other details about the employee"
     }
   ],
   "LoginActivity": [
     {
       "id": "etEmail",
-      "tip": "Enter a valid email address"
+      "message": "Enter a valid email address"
     },
     {
       "id": "etPassword",
       "title": "Password",
-      "tip": "Password should contain atleast 8 characters long"
+      "message": "Password should contain atleast 8 characters long"
     },
     {
       "id": "checkboxRemember",
       "title": "Remember Me",
-      "tip": "Check this to persist your session details"
+      "message": "Check this to persist your session details"
     },
     {
       "id": "btnLogin",
       "title": "Login",
-      "tip": "Tap this after you enter valid credentials"
+      "message": "Tap this after you enter valid credentials"
     },
     {
       "id": "tvRestore",
-      "tip": "This will open the reset password web page"
+      "message": "This will open the reset password web page"
     },
     {
       "id": "tvRegister",
-      "tip": "You can create a new account by tapping this button"
+      "message": "You can create a new account by tapping this button"
     }
   ]
 }

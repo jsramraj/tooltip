@@ -18,7 +18,8 @@ public class ToolTipComposer {
     /**
      * Default constructor
      * Stores the resource id, title and text of the tip
-     * @param allTipData All the trip data with key being the activity name
+     *
+     * @param allTipData   All the trip data with key being the activity name
      * @param globalConfig App wide configuration for constructing the tips
      */
     private ToolTipComposer(HashMap<String, List<HashMap<String, String>>> allTipData,
@@ -47,10 +48,11 @@ public class ToolTipComposer {
 
         /**
          * Add static tip data
+         *
          * @param activityName Local class name of the activity
-         * @param identifiers Array of resource id
-         * @param titles Array of titles for the tip
-         * @param messages Array of the tip message
+         * @param identifiers  Array of resource id
+         * @param titles       Array of titles for the tip
+         * @param messages     Array of the tip message
          * @return A {@code ToolTipComposer.Builder} object
          */
         public Builder addStaticTips(String activityName, String[] identifiers, String[] titles, String[] messages) {
@@ -60,6 +62,15 @@ public class ToolTipComposer {
             return this;
         }
 
+        /**
+         * Add static tip data
+         *
+         * @param activityName Local class name of the activity
+         * @param resourceId   Resource id of the target view
+         * @param title        Optional title for the tip
+         * @param message      Message/hint/decription
+         * @return A {@code ToolTipComposer.Builder} object
+         */
         public Builder addStaticTip(String activityName, String resourceId, String title, String message) {
             HashMap<String, String> tip = new HashMap<>();
             tip.put(RESOURCE_ID_KEY, resourceId);
@@ -77,6 +88,7 @@ public class ToolTipComposer {
 
         /**
          * Set the app wide configuration to customize the appearance of the tip
+         *
          * @param globalConfig
          * @return A {@code ToolTipComposer.Builder} object
          */
@@ -87,6 +99,7 @@ public class ToolTipComposer {
 
         /**
          * Create the tooltip composer object from all the tip data and info we have
+         *
          * @return A new instance of {@code ToolTipComposer} class
          */
         public ToolTipComposer build() {

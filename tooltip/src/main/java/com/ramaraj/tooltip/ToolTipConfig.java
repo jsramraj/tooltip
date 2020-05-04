@@ -9,15 +9,15 @@ public class ToolTipConfig {
     private static ToolTipConfig instance;
     private static final Object lock = new Object();
 
-    private int tipTextStyleResId;
-    private int tipTitleTextStyleResId;
+    private int tipMessageStyleResId;
+    private int tipTitleStyleResId;
 
     /**
      * Default constructor. Default styles for the tips are set here
      */
     public ToolTipConfig() {
-        tipTextStyleResId = R.style.defaultTipTextStyle;
-        tipTitleTextStyleResId = R.style.defaultTipTitleStyle;
+        tipMessageStyleResId = R.style.defaultTipTextStyle;
+        tipTitleStyleResId = R.style.defaultTipTitleStyle;
     }
 
     /**
@@ -45,27 +45,27 @@ public class ToolTipConfig {
         ToolTipConfig.instance = instance;
     }
 
-    public int getTipTextStyleResId() {
-        return tipTextStyleResId;
+    public int getTipMessageStyleResId() {
+        return tipMessageStyleResId;
     }
 
     /**
      * Customize the appearance of the tip message
-     * @param tipTextStyleResId Style resource if for the tip message
+     * @param tipMessageStyleResId Style resource if for the tip message
      */
-    public void setTipTextStyleResId(@StyleRes int tipTextStyleResId) {
-        this.tipTextStyleResId = tipTextStyleResId;
+    public void setTipMessageStyleResId(@StyleRes int tipMessageStyleResId) {
+        this.tipMessageStyleResId = tipMessageStyleResId;
     }
 
-    public int getTipTitleTextStyleResId() {
-        return tipTitleTextStyleResId;
+    public int getTipTitleStyleResId() {
+        return tipTitleStyleResId;
     }
 
     /**
      * Customize the appearance of the tip message
-     * @param tipTitleTextStyleResId Style resource id for the tip title
+     * @param tipTitleStyleResId Style resource id for the tip title
      */
-    public void setTipTitleTextStyleResId(@StyleRes int tipTitleTextStyleResId) {
-        this.tipTitleTextStyleResId = tipTitleTextStyleResId;
+    public void setTipTitleStyleResId(@StyleRes int tipTitleStyleResId) {
+        this.tipTitleStyleResId = tipTitleStyleResId;
     }
 }

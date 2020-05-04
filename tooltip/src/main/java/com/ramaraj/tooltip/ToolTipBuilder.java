@@ -17,28 +17,12 @@ public class ToolTipBuilder {
 
     /**
      * Add the tooltip data to construct the static tip.
-     * All the tips for all the activities
-     * It is required that all three arrays here are not null and have same length
      *
      * @param activityName Local class name of the activity
-     * @param identifiers  Array of the resource id of the view for which the user has acknowledged the tip
-     * @param tipsTitles   Array of the tip titles (Optional)
-     * @param tipsText     Array of tip message
+     * @param identifier  Array of the resource id of the view for which the user has acknowledged the tip
+     * @param title       Array of the tip titles (Optional)
+     * @param message     Array of tip message
      */
-    public void addStaticTips(String activityName, int[] identifiers, String[] tipsTitles, String[] tipsText) {
-        List<StaticTip> tipsForActivity = staticTipsForActivity(activityName);
-        for (int index = 0; index < identifiers.length; index++) {
-            if (PersistentManager.getInstance().isAcknowledged(activityName, identifiers[index])) {
-                //we have already shown the tip for this resource
-                //let's skip creating this tip
-                continue;
-            }
-            StaticTip tip = new StaticTip(activityName, identifiers[index], tipsTitles[index], tipsText[index]);
-            tipsForActivity.add(tip);
-        }
-        allTips.put(activityName, tipsForActivity);
-    }
-
     public void addStaticTip(String activityName, int identifier, String title, String message) {
         List<StaticTip> tipsForActivity = staticTipsForActivity(activityName);
         if (!PersistentManager.getInstance().isAcknowledged(activityName, identifier)) {
@@ -55,7 +39,7 @@ public class ToolTipBuilder {
      */
     public List<StaticTip> staticTipsForActivity(String activityName) {
         if (allTips.get(activityName) == null) {
-            allTips.put(activityName, new ArrayList<StaticTip>());
+            allTips.put(activityName, new ArrayList<>());
         }
         return allTips.get(activityName);
     }

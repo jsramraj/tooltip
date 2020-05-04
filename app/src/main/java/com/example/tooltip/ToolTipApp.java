@@ -27,27 +27,16 @@ public class ToolTipApp extends Application {
             JSONObject obj = new JSONObject(readJSONFromAsset());
 
             for (Iterator<String> it = obj.keys(); it.hasNext(); ) {
-                String key = it.next();
-                JSONArray data = obj.getJSONArray(key);
-
-                ArrayList<String> identifiers = new ArrayList<>();
-                ArrayList<String> titles = new ArrayList<>();
-                ArrayList<String> tips = new ArrayList<>();
+                String activityName = it.next();
+                JSONArray data = obj.getJSONArray(activityName);
 
                 for (int i = 0; i < data.length(); i++) {
                     JSONObject tipObject = data.getJSONObject(i);
-                    identifiers.add(tipObject.getString("id"));
-                    if (tipObject.has("title"))
-                        titles.add(tipObject.getString("title"));
-                    else
-                        titles.add("");
-                    tips.add(tipObject.getString("tip"));
+                    tipComposerBuilder.addStaticTip(activityName,
+                            tipObject.getString("id"),
+                            tipObject.has("title") ? tipObject.getString("title") : "",
+                            tipObject.getString("message"));
                 }
-
-                tipComposerBuilder.addStaticTips(key,
-                        identifiers.toArray(new String[0]),
-                        titles.toArray(new String[0]),
-                        tips.toArray(new String[0]));
             }
             Log.d("TTA", String.valueOf(obj));
         } catch (JSONException e) {
@@ -57,8 +46,8 @@ public class ToolTipApp extends Application {
         // customize the tooltips globally.
         // this will override the default appearance of the tip
         ToolTipConfig globalConfig = new ToolTipConfig();
-        globalConfig.setTipTextStyleResId(R.style.tipTextStyleGlobal);
-        globalConfig.setTipTitleTextStyleResId(R.style.tipTitleTextStyleGlobal);
+        globalConfig.setTipMessageStyleResId(R.style.tipTextStyleGlobal);
+        globalConfig.setTipTitleStyleResId(R.style.tipTitleTextStyleGlobal);
         tipComposerBuilder.setGlobalConfig(globalConfig);
 
         ToolTipManager.init(this, tipComposerBuilder.build());
