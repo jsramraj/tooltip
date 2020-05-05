@@ -6,8 +6,10 @@ import androidx.annotation.StyleRes;
  * Configuration to customize the behaviour of the tip
  */
 public class ToolTipConfig {
-    private static ToolTipConfig instance;
-    private static final Object lock = new Object();
+
+    private static final Object LOCK = new Object();
+
+    private static volatile ToolTipConfig instance;
 
     private int tipMessageStyleResId;
     private int tipTitleStyleResId;
@@ -26,15 +28,18 @@ public class ToolTipConfig {
      */
     public static ToolTipConfig getInstance() {
 
-        if (instance == null) {
-            synchronized (lock) {
-                if (instance == null) {
-                    instance = new ToolTipConfig();
+        ToolTipConfig localResource = instance;
+
+        if (localResource == null) {
+            synchronized (LOCK) {
+                localResource = instance;
+                if (localResource == null) {
+                    instance = localResource = new ToolTipConfig();
                 }
             }
         }
 
-        return instance;
+        return localResource;
     }
 
     /**

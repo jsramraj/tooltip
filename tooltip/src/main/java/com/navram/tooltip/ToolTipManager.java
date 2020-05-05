@@ -20,6 +20,10 @@ import java.util.List;
  */
 public class ToolTipManager {
 
+    private ToolTipManager() {
+        //Do nothing
+    }
+
     private static ToolTipBuilder tipBuilder;
 
     /**
@@ -29,7 +33,7 @@ public class ToolTipManager {
      * @param tipComposer All the tips are to be pushed via the {@code ToolTipComposer}
      */
     public static void init(final Application application, final ToolTipComposer tipComposer) {
-        PersistentManager.init(application);
+        PersistentManager.getInstance().init(application);
         ActivityWrapper.init(tipComposer);
 
         application.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
@@ -40,6 +44,7 @@ public class ToolTipManager {
 
             @Override
             public void onActivityStarted(@NonNull Activity activity) {
+                //Do nothing
             }
 
             @Override
@@ -60,17 +65,17 @@ public class ToolTipManager {
 
             @Override
             public void onActivityStopped(@NonNull Activity activity) {
-
+                //Do nothing
             }
 
             @Override
             public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle outState) {
-
+                //Do nothing
             }
 
             @Override
             public void onActivityDestroyed(@NonNull Activity activity) {
-
+                //Do nothing
             }
         });
     }
@@ -81,16 +86,21 @@ public class ToolTipManager {
      */
     public static class ActivityWrapper {
 
+        private ActivityWrapper() {
+            //Do nothing
+        }
+
         static ToolTipComposer tipComposer;
+
         static ToolTipPresenter toolTipPresenter;
 
         /**
          * Inject the tip composer object with all the tip data
          *
-         * @param _tipComposer a {@code ToolTipComposer } object
+         * @param tipComposer a {@link ToolTipComposer} object
          */
-        protected static void init(ToolTipComposer _tipComposer) {
-            tipComposer = _tipComposer;
+        protected static void init(ToolTipComposer tipComposer) {
+            ActivityWrapper.tipComposer = tipComposer;
         }
 
         /**
@@ -99,7 +109,7 @@ public class ToolTipManager {
          * @param activity Activity to show the tip
          */
         protected static void showTipsForActivity(Activity activity) {
-            if (tipBuilder != null && tipBuilder.staticTipsForActivity(activity.getLocalClassName()).size() > 0) {
+            if (tipBuilder != null && !tipBuilder.staticTipsForActivity(activity.getLocalClassName()).isEmpty()) {
                 toolTipPresenter = new ToolTipPresenter(tipBuilder, activity);
                 toolTipPresenter.displayStaticTipsForActivity();
             } else {
@@ -114,13 +124,14 @@ public class ToolTipManager {
          */
         protected static void buildTipsForActivity(Activity activity) {
 
-            List<ToolTipModel> tipsForActivity = tipComposer.getAllTipData().get(activity.getLocalClassName());
-
-            if (tipsForActivity == null) {
-                throw new IllegalArgumentException("Tips for activity map found as null");
-            }
-
             String activityName = activity.getLocalClassName();
+
+            List<ToolTipModel> tipsForActivity = ResourceUtils.findToolTipModelItems(tipComposer.getAllTipData(),
+                    activityName);
+
+            if (tipsForActivity.isEmpty()) {
+                return;
+            }
 
             tipBuilder = new ToolTipBuilder();
 
@@ -164,6 +175,10 @@ public class ToolTipManager {
      * Interpret the tip acknowledgement data stored in the persistent storage
      */
     public static class DataWrapper {
+
+        private DataWrapper() {
+            //Do nothing
+        }
 
         /**
          * Marks a tip as not acknowledged by the user

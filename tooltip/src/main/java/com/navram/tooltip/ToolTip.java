@@ -15,7 +15,7 @@ public abstract class ToolTip {
     private final String tipText;
     private final String activityName;
 
-    protected ToolTipListener.ToolTipOnDismissListener onDismissListener;
+    private ToolTipListener.ToolTipOnDismissListener onDismissListener;
 
     /**
      * Default constructor to create the ToolTip

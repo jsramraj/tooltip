@@ -1,15 +1,34 @@
 package com.navram.tooltip;
 
+import android.content.Context;
+
+import com.navram.tooltip.utils.ResourceUtils;
+
 import org.json.JSONException;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ToolTipComposerTest {
+
+    private static final String PAGE_NAME = "TestActivity";
+    private static final String PAGE_COMPONENT_ID = "testResourceId";
+    private static final String TIP_TITLE = "tipTitle";
+    private static final String TIP_DESCRIPTION = "tipDescription";
+
+    @Mock
+    private Context context;
 
     @Test
     public void toolTipComposerBuilder_returns_validTipComposer() {
@@ -34,20 +53,25 @@ public class ToolTipComposerTest {
         ToolTipComposer.Builder builder = new ToolTipComposer.Builder();
 
         ToolTipModel toolTipModel = new ToolTipModel();
-        toolTipModel.setPageName("TestActivity");
-        toolTipModel.setComponentId("testResourceId");
-        toolTipModel.setTitle("tipTitle");
-        toolTipModel.setMessage("tipDescription");
+        toolTipModel.setPageName(PAGE_NAME);
+        toolTipModel.setComponentId(PAGE_COMPONENT_ID);
+        toolTipModel.setTitle(TIP_TITLE);
+        toolTipModel.setMessage(TIP_DESCRIPTION);
 
-        builder.addStaticTip(toolTipModel.getPageName(), toolTipModel);
+        builder.addStaticTip(toolTipModel);
         ToolTipComposer tipComposer = builder.build();
 
         assertEquals(1, tipComposer.getAllTipData().size());
-        assertTrue(tipComposer.getAllTipData().containsKey("TestActivity"));
-        assertEquals(1, tipComposer.getAllTipData().get("TestActivity").size());
-        assertEquals("testResourceId", tipComposer.getAllTipData().get("TestActivity").get(0).getComponentId());
-        assertEquals("tipTitle", tipComposer.getAllTipData().get("TestActivity").get(0).getTitle());
-        assertEquals("tipDescription", tipComposer.getAllTipData().get("TestActivity").get(0).getMessage());
+
+        List<ToolTipModel> testActivity = ResourceUtils.findToolTipModelItems(
+                tipComposer.getAllTipData(), PAGE_NAME);
+
+        assertNotNull(testActivity);
+        assertFalse(testActivity.isEmpty());
+        assertEquals(1, testActivity.size());
+        assertEquals(PAGE_COMPONENT_ID, testActivity.get(0).getComponentId());
+        assertEquals(TIP_TITLE, testActivity.get(0).getTitle());
+        assertEquals(TIP_DESCRIPTION, testActivity.get(0).getMessage());
     }
 
     @Test(expected = NullPointerException.class)
@@ -71,19 +95,22 @@ public class ToolTipComposerTest {
         String[] identifiers = new String[]{"helloWorldLabel", "empNameTextView", "designationTextView"};
         String[] tips = new String[]{"Tips for hello world", "Name of the logged in employee", "Role of the employee in the company"};
         builder.addStaticTips("MainActivity", identifiers, tips, null);
+
         ToolTipComposer tipComposer = builder.build();
 
-        assertEquals(1, tipComposer.getAllTipData().size());
-        assertTrue(tipComposer.getAllTipData().containsKey("MainActivity"));
-        assertEquals(3, tipComposer.getAllTipData().get("MainActivity").size());
+        List<ToolTipModel> values = ResourceUtils.findToolTipModelItems(tipComposer.getAllTipData(),
+                "MainActivity");
 
-        assertEquals("helloWorldLabel", tipComposer.getAllTipData().get("MainActivity").get(0).getComponentId());
+        assertNotNull(values);
+        assertFalse(values.isEmpty());
+        assertEquals(3, values.size());
+        assertEquals("helloWorldLabel", values.get(0).getComponentId());
     }
 
     @Test(expected = NullPointerException.class)
     public void builderCreation_WithNullJsonData_RaisesException() {
         ToolTipComposer.Builder builder = new ToolTipComposer.Builder();
-        builder.addStaticTip(null, "");
+        builder.addStaticTip(context, "");
     }
 
     @Test(expected = JSONException.class)
@@ -123,11 +150,13 @@ public class ToolTipComposerTest {
         builder.addStaticTip(jsonData);
         ToolTipComposer tipComposer = builder.build();
 
-        assertEquals(1, tipComposer.getAllTipData().size());
-        assertTrue(tipComposer.getAllTipData().containsKey("MainActivity"));
-        assertEquals(4, tipComposer.getAllTipData().get("MainActivity").size());
+        List<ToolTipModel> values = ResourceUtils.findToolTipModelItems(tipComposer.getAllTipData(),
+                "MainActivity");
 
-        assertEquals("helloWorldLabel", tipComposer.getAllTipData().get("MainActivity").get(0).getComponentId());
+        assertNotNull(values);
+        assertFalse(values.isEmpty());
+        assertEquals(4, values.size());
+        assertEquals("helloWorldLabel", values.get(0).getComponentId());
     }
 
     @Test

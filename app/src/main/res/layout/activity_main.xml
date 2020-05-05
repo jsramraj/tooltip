@@ -4,26 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/margin_16dp"
     tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/helloWorldLabel"
-        android:layout_width="77dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:layout_marginRight="164dp"
-        android:background="#00ff00"
-        android:text="Hello World!"
-        app:layout_constraintRight_toRightOf="parent"
+        android:text="@string/app_name"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/empName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
-        android:text="Employee Name"
+        android:layout_marginTop="@dimen/margin_32dp"
+        android:text="@string/employee_name"
+        android:textSize="@dimen/text_size_16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/helloWorldLabel" />
 
@@ -31,8 +31,9 @@
         android:id="@+id/designation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Designation"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:text="@string/designation"
+        android:textSize="@dimen/text_size_16sp"
         app:layout_constraintStart_toStartOf="@+id/empName"
         app:layout_constraintTop_toBottomOf="@+id/empName" />
 
@@ -40,10 +41,9 @@
         android:id="@+id/otherDetailsSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="Show other deails"
+        android:layout_marginTop="@dimen/margin_32dp"
+        android:text="@string/show_other_details"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/designation" />
 
@@ -52,9 +52,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Other details"
+        android:text="@string/other_details"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/designation"
         app:layout_constraintTop_toBottomOf="@+id/otherDetailsSwitch" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/actionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_add_white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

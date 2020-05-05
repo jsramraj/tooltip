@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ToolTip</string>
+    <string name="app_name">Tool Tip Example Application</string>
     <string name="hint_email">Email</string>
     <string name="btn_facebook">Facebook Login</string>
     <string name="hint_pass">Password</string>
@@ -8,4 +8,10 @@
     <string name="forgot_pwd">Forgot password?</string>
     <string name="btn_google">Google Login</string>
     <string name="register">No account yet? Create on</string>
+    <string name="reset_all_tips">Reset all Tips</string>
+    <string name="show_tips">Show Tips</string>
+    <string name="employee_name">Employee Name</string>
+    <string name="designation">Designation</string>
+    <string name="show_other_details">Show other details</string>
+    <string name="other_details">Other details</string>
 </resources>

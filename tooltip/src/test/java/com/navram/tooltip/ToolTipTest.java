@@ -12,5 +12,6 @@ public class ToolTipTest {
         assertEquals("MainActivity", staticTip.getActivityName());
         assertEquals(123, staticTip.getResourceId());
         assertEquals("Tip message", staticTip.getTipText());
+        assertEquals("Tip title", staticTip.getTipTitle());
     }
 }

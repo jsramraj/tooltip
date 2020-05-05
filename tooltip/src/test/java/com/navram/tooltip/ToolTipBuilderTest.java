@@ -73,7 +73,7 @@ public class ToolTipBuilderTest {
             return null;
         });
 
-        PersistentManager.init(context);
+        PersistentManager.getInstance().init(context);
         builder = new ToolTipBuilder();
     }
 

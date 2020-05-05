@@ -46,11 +46,11 @@ public class LoginActivity extends AppCompatActivity implements ToolTipListener.
         return null;
     }
 
-    public void resetAllTips(View button) {
+    public void resetAllTips(View view) {
         ToolTipManager.DataWrapper.resetAllAcknowledgements();
     }
 
-    public void showTips(View button) {
+    public void showTips(View view) {
         ToolTipManager.ActivityWrapper.relaunchHelpForActivity(this);
     }
 }

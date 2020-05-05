@@ -1,20 +1,8 @@
 {
   "MainActivity": [
     {
-      "id": "helloWorldLabel",
-      "message": "Tips for hello world"
-    },
-    {
-      "id": "empName",
-      "message": "Name of the logged in employee"
-    },
-    {
-      "id": "designation",
-      "message": "Role of the employee in the company"
-    },
-    {
-      "id": "otherDetailsTextView",
-      "message": "Some other details about the employee"
+      "id": "actionButton",
+      "message": "To add new task to track"
     }
   ],
   "LoginActivity": [

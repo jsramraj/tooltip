@@ -30,7 +30,12 @@ public class StaticTip extends ToolTip {
     @Override
     public boolean displayTip(Activity activity) {
 
+        if (PersistentManager.getInstance().isAcknowledged(getActivityName(), getResourceId())) {
+            return false;
+        }
+
         View targetView = activity.findViewById(getResourceId());
+
         if (targetView == null) {
             //No view with this id is found in the activity
             return false;
@@ -38,41 +43,49 @@ public class StaticTip extends ToolTip {
 
         Rect targetViewFrame = new Rect();
         targetView.getGlobalVisibleRect(targetViewFrame);
+
         if (targetViewFrame.isEmpty()) {
-            //the view frame is not valid, or the view's visiblity status is .GONE
+            //the view frame is not valid, or the view's visibility status is View.GONE
             return false;
         }
 
+        createToolTipWindow(activity, targetView, targetViewFrame);
+
+        return super.displayTip(activity);
+    }
+
+    private void createToolTipWindow(Activity aActivity, View aTargetView, Rect targetViewFrame) {
+
         DisplayMetrics displayMetrics = new DisplayMetrics();
-        activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        aActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
         // Inflate all the controls from the tip layout
-        View tipView = LayoutInflater.from(activity).inflate(R.layout.tooltip_content, null);
+        View tipView = LayoutInflater.from(aActivity).inflate(R.layout.tooltip_content, null);
         TextView tipMessageTextView = tipView.findViewById(R.id.hint_text);
         TextView tipTitleTextView = tipView.findViewById(R.id.tip_title);
         SeeThroughViewGroup holeView = tipView.findViewById(R.id.see_through_view);
         Button nextButton = tipView.findViewById(R.id.nextButton);
 
         tipMessageTextView.setText(getTipText());
-        // Check if custom style is found in activity level
+        // Check if custom style is found in aActivity level
         if (ToolTipConfig.getInstance().getTipMessageStyleResId() > 0) {
             tipMessageTextView.setTextAppearance(ToolTipConfig.getInstance().getTipMessageStyleResId());
         }
         // Check if custom style is found in global level
-        if (activity instanceof ToolTipListener.ToolTipConfigChange) {
-            ToolTipConfig config = ((ToolTipListener.ToolTipConfigChange) activity).configForTip(this);
+        if (aActivity instanceof ToolTipListener.ToolTipConfigChange) {
+            ToolTipConfig config = ((ToolTipListener.ToolTipConfigChange) aActivity).configForTip(this);
             if (config != null && config.getTipMessageStyleResId() > 0)
                 tipMessageTextView.setTextAppearance(config.getTipMessageStyleResId());
         }
 
         int[] pos = new int[2];// location of the target view
-        targetView.getLocationOnScreen(pos);
+        aTargetView.getLocationOnScreen(pos);
 
         // set the frame for the hole view
         int paddingForRect = 20;
         FrameLayout.LayoutParams holeViewLayoutParams = (FrameLayout.LayoutParams) holeView.getLayoutParams();
         holeViewLayoutParams.leftMargin = targetViewFrame.left - paddingForRect;
-        holeViewLayoutParams.topMargin = targetViewFrame.top - StatusBarUtils.getStatusBarOffset(activity) - paddingForRect;
+        holeViewLayoutParams.topMargin = targetViewFrame.top - StatusBarUtils.getStatusBarOffset(aActivity) - paddingForRect;
         holeViewLayoutParams.width = targetViewFrame.width() + 2 * paddingForRect;
         holeViewLayoutParams.height = targetViewFrame.height() + 2 * paddingForRect;
         holeView.setCornerRadius(50);
@@ -99,13 +112,13 @@ public class StaticTip extends ToolTip {
         // if the title for the tip is not registered, let's hide the tip title textview
         tipTitleTextView.setVisibility(StringUtils.isNullOrEmpty(getTipTitle()) ? View.INVISIBLE : View.VISIBLE);
         if (!StringUtils.isNullOrEmpty(getTipTitle())) {
-            // Check if custom style is found in activity level
+            // Check if custom style is found in aActivity level
             if (ToolTipConfig.getInstance().getTipTitleStyleResId() > 0) {
                 tipTitleTextView.setTextAppearance(ToolTipConfig.getInstance().getTipTitleStyleResId());
             }
             // Check if custom style is found in global level
-            if (activity instanceof ToolTipListener.ToolTipConfigChange) {
-                ToolTipConfig config = ((ToolTipListener.ToolTipConfigChange) activity).configForTip(this);
+            if (aActivity instanceof ToolTipListener.ToolTipConfigChange) {
+                ToolTipConfig config = ((ToolTipListener.ToolTipConfigChange) aActivity).configForTip(this);
                 if (config != null && config.getTipTitleStyleResId() > 0)
                     tipTitleTextView.setTextAppearance(config.getTipTitleStyleResId());
             }
@@ -120,9 +133,7 @@ public class StaticTip extends ToolTip {
         });
 
         tipPopupWindow = new PopupWindow(tipView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
-        tipPopupWindow.showAtLocation(targetView, Gravity.TOP | Gravity.END, 0, 0);
-
-        return super.displayTip(activity);
+        tipPopupWindow.showAtLocation(aTargetView, Gravity.TOP | Gravity.END, 0, 0);
     }
 
     @Override

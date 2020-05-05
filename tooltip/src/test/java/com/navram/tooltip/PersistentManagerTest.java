@@ -69,7 +69,7 @@ public class PersistentManagerTest {
             return null;
         });
 
-        PersistentManager.init(context);
+        PersistentManager.getInstance().init(context);
     }
 
     @Test

@@ -1,113 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/darker_gray"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:padding="20dp">
 
-
-    <LinearLayout
-        android:id="@+id/ll1"
+    <EditText
+        android:id="@+id/etEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:autofillHints=""
+        android:hint="@string/hint_email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-
-        <EditText
-            android:id="@+id/etEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_email"
-            android:inputType="textEmailAddress" />
-
-
-        <EditText
-            android:id="@+id/etPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_pass"
-            android:inputType="textPassword" />
-
-        <CheckBox
-            android:id="@+id/checkboxRemember"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/checkbox_remember"
-            android:textColor="@android:color/white" />
-
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="6dp"
-            android:text="@string/btn_login" />
-
-        <TextView
-            android:id="@+id/tvRestore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:clickable="true"
-            android:linksClickable="false"
-            android:text="@string/forgot_pwd"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <LinearLayout
+    <EditText
+        android:id="@+id/etPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ll1"
-        android:layout_marginTop="28dp"
-        android:orientation="vertical">
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:autofillHints=""
+        android:hint="@string/hint_pass"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etEmail" />
 
-        <Button
-            android:id="@+id/btnFacebook"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:background="#3b5998"
-            android:text="@string/btn_facebook" />
+    <CheckBox
+        android:id="@+id/checkboxRemember"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:text="@string/checkbox_remember"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etPassword" />
 
-        <Button
-            android:id="@+id/btnGoogle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#dd4b39"
-            android:text="@string/btn_google" />
-
-    </LinearLayout>
-
-    <LinearLayout
+    <Button
+        android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:weightSum="1">
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:text="@string/btn_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/checkboxRemember" />
 
-        <Button
-            android:id="@+id/resetTips"
-            android:layout_weight="0.5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:onClick="resetAllTips"
-            android:text="Reset all Tips"
-            android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/tvRestore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:clickable="true"
+        android:linksClickable="false"
+        android:text="@string/forgot_pwd"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnLogin" />
 
-        <Button
-            android:id="@+id/showTips"
-            android:layout_weight="0.5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:onClick="showTips"
-            android:text="Show Tips"
-            android:textStyle="bold" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/btnFacebook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="#3b5998"
+        android:text="@string/btn_facebook"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRestore" />
 
-</RelativeLayout>
+    <Button
+        android:id="@+id/btnGoogle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:backgroundTint="#dd4b39"
+        android:text="@string/btn_google"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnFacebook" />
+
+    <Button
+        android:id="@+id/resetTips"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="resetAllTips"
+        android:text="@string/reset_all_tips"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/showTips"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/showTips"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="showTips"
+        android:text="@string/show_tips"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/resetTips" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

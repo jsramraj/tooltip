@@ -13,14 +13,6 @@ public class ToolTipModel {
 
     private String message;
 
-    private String backgroundColor;
-
-    private String titleColor;
-
-    private String messageColor;
-
-    private String actionButtonColor;
-
     public String getPageName() {
         return pageName;
     }
@@ -51,37 +43,5 @@ public class ToolTipModel {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public String getBackgroundColor() {
-        return backgroundColor;
-    }
-
-    public void setBackgroundColor(String backgroundColor) {
-        this.backgroundColor = backgroundColor;
-    }
-
-    public String getTitleColor() {
-        return titleColor;
-    }
-
-    public void setTitleColor(String titleColor) {
-        this.titleColor = titleColor;
-    }
-
-    public String getMessageColor() {
-        return messageColor;
-    }
-
-    public void setMessageColor(String messageColor) {
-        this.messageColor = messageColor;
-    }
-
-    public String getActionButtonColor() {
-        return actionButtonColor;
-    }
-
-    public void setActionButtonColor(String actionButtonColor) {
-        this.actionButtonColor = actionButtonColor;
     }
 }
