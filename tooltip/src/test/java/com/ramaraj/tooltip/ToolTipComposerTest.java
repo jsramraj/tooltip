@@ -89,13 +89,13 @@ public class ToolTipComposerTest {
     @Test(expected = JSONException.class)
     public void builderCreation_WithInvalidJsonData_RaisesException() throws JSONException {
         ToolTipComposer.Builder builder = new ToolTipComposer.Builder();
-        builder.addStaticTip(null, "null : 123");
+        builder.addStaticTip("null : 123");
     }
 
     @Test(expected = JSONException.class)
     public void builderCreation_WithInvalidJsonData_RaisesException2() throws JSONException {
         ToolTipComposer.Builder builder = new ToolTipComposer.Builder();
-        builder.addStaticTip(null, "[\"test\" : 123]");
+        builder.addStaticTip("[\"test\" : 123]");
     }
 
     @Test
