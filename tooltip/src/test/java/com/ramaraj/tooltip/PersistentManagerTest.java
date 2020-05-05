@@ -35,10 +35,6 @@ public class PersistentManagerTest {
 
     @Before
     public void setup() {
-        sharedPreferences = Mockito.mock(SharedPreferences.class);
-        editor = Mockito.mock(SharedPreferences.Editor.class);
-        context = Mockito.mock(Context.class);
-
         when(context.getSharedPreferences(anyString(), anyInt())).thenReturn(sharedPreferences);
         when(sharedPreferences.edit()).thenReturn(editor);
         when(editor.commit()).thenReturn(true);
