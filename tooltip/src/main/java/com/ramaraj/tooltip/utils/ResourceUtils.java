@@ -58,7 +58,7 @@ public class ResourceUtils {
     }
 
     public static String readJSONFromAsset(Context aContext, String aJsonFileName) {
-        String json = null;
+        String json;
         try {
             InputStream is = aContext.getAssets().open(aJsonFileName);
             int size = is.available();

@@ -120,7 +120,7 @@ public class ToolTipComposer {
          * @throws JSONException if the json is not following standard mentioned in the above link. Check Sample data section.
          * @see <a href="https://raw.githubusercontent.com/jsramraj/tooltip/master/app/src/main/assets/tooltip_data.json">Sample data</a>
          */
-        private Builder addStaticTip(String tipDataJson) throws JSONException {
+        public Builder addStaticTip(String tipDataJson) throws JSONException {
 
             if (tipDataJson == null)
                 throw new NullPointerException("Json value cannot be null");
