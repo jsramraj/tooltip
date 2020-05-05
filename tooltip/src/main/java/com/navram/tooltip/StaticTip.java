@@ -1,4 +1,4 @@
-package com.ramaraj.tooltip;
+package com.navram.tooltip;
 
 import android.app.Activity;
 import android.graphics.Rect;
@@ -12,8 +12,8 @@ import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.ramaraj.tooltip.utils.StatusBarUtils;
-import com.ramaraj.tooltip.utils.StringUtils;
+import com.navram.tooltip.utils.StatusBarUtils;
+import com.navram.tooltip.utils.StringUtils;
 
 /**
  * Tips for the static controls

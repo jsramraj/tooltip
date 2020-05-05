@@ -1,4 +1,4 @@
-package com.ramaraj.tooltip;
+package com.navram.tooltip;
 
 import android.app.Activity;
 import android.app.Application;
@@ -10,7 +10,7 @@ import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.ramaraj.tooltip.utils.ResourceUtils;
+import com.navram.tooltip.utils.ResourceUtils;
 
 import java.util.List;
 

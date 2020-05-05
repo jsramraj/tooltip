@@ -1,4 +1,4 @@
-package com.ramaraj.tooltip;
+package com.navram.tooltip;
 
 public class Constants {
 

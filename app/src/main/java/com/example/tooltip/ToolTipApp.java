@@ -2,9 +2,9 @@ package com.example.tooltip;
 
 import android.app.Application;
 
-import com.ramaraj.tooltip.ToolTipComposer;
-import com.ramaraj.tooltip.ToolTipConfig;
-import com.ramaraj.tooltip.ToolTipManager;
+import com.navram.tooltip.ToolTipComposer;
+import com.navram.tooltip.ToolTipConfig;
+import com.navram.tooltip.ToolTipManager;
 
 public class ToolTipApp extends Application {
     @Override

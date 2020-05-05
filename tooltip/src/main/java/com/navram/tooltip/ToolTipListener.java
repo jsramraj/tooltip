@@ -1,4 +1,4 @@
-package com.ramaraj.tooltip;
+package com.navram.tooltip;
 
 /**
  * Listen to the tip events. Use these methods in activity level.

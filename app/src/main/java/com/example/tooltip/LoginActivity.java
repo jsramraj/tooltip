@@ -8,10 +8,10 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.ramaraj.tooltip.ToolTip;
-import com.ramaraj.tooltip.ToolTipConfig;
-import com.ramaraj.tooltip.ToolTipListener;
-import com.ramaraj.tooltip.ToolTipManager;
+import com.navram.tooltip.ToolTip;
+import com.navram.tooltip.ToolTipConfig;
+import com.navram.tooltip.ToolTipListener;
+import com.navram.tooltip.ToolTipManager;
 
 public class LoginActivity extends AppCompatActivity implements ToolTipListener.ToolTipOnShowListener, ToolTipListener.ToolTipConfigChange {
 

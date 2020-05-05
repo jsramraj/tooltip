@@ -1,4 +1,4 @@
-package com.ramaraj.tooltip.utils;
+package com.navram.tooltip.utils;
 
 import android.content.Context;
 import android.content.res.Resources;

@@ -1,10 +1,10 @@
-package com.ramaraj.tooltip;
+package com.navram.tooltip;
 
 import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.ramaraj.tooltip.utils.ResourceUtils;
+import com.navram.tooltip.utils.ResourceUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,9 +16,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import static com.ramaraj.tooltip.Constants.RESOURCE_ID_KEY;
-import static com.ramaraj.tooltip.Constants.TIP_MESSAGE_ID_KEY;
-import static com.ramaraj.tooltip.Constants.TIP_TITLE_ID_KEY;
+import static com.navram.tooltip.Constants.RESOURCE_ID_KEY;
+import static com.navram.tooltip.Constants.TIP_MESSAGE_ID_KEY;
+import static com.navram.tooltip.Constants.TIP_TITLE_ID_KEY;
 
 /**
  * Acts as an data source for the tooltip

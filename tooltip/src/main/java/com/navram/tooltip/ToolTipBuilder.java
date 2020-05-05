@@ -1,4 +1,4 @@
-package com.ramaraj.tooltip;
+package com.navram.tooltip;
 
 import java.util.ArrayList;
 import java.util.HashMap;

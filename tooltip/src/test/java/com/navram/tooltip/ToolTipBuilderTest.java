@@ -1,12 +1,10 @@
-package com.ramaraj.tooltip;
+package com.navram.tooltip;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;

@@ -1,4 +1,4 @@
-package com.ramaraj.tooltip.utils;
+package com.navram.tooltip.utils;
 
 public class StringUtils {
     public static boolean isNullOrEmpty(String str) {

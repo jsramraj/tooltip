@@ -1,4 +1,4 @@
-package com.ramaraj.tooltip;
+package com.navram.tooltip;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,7 +13,7 @@ public class PersistentManager {
 
     private static final Object LOCK = new Object();
 
-    private static final String PREFERENCE_FILE_KEY = "com.ramaraj.tooltip.data";
+    private static final String PREFERENCE_FILE_KEY = "com.navram.tooltip.data";
     private static final String DELIMITER = "~";
 
     private volatile static SharedPreferences sharedPreferences;

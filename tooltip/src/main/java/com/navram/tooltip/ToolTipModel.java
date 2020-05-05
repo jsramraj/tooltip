@@ -1,4 +1,4 @@
-package com.ramaraj.tooltip;
+package com.navram.tooltip;
 
 /**
  * Created by ancientinc on 05/05/20.

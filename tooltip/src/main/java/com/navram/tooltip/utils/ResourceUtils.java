@@ -1,10 +1,10 @@
-package com.ramaraj.tooltip.utils;
+package com.navram.tooltip.utils;
 
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
-import com.ramaraj.tooltip.Constants;
+import com.navram.tooltip.Constants;
 
 import java.io.IOException;
 import java.io.InputStream;
