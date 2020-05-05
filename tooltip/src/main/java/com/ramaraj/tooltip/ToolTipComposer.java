@@ -1,6 +1,10 @@
 package com.ramaraj.tooltip;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
+
+import com.ramaraj.tooltip.utils.ResourceUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,8 +14,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
-import static com.ramaraj.tooltip.Constants.*;
+import static com.ramaraj.tooltip.Constants.RESOURCE_ID_KEY;
+import static com.ramaraj.tooltip.Constants.TIP_MESSAGE_ID_KEY;
+import static com.ramaraj.tooltip.Constants.TIP_TITLE_ID_KEY;
 
 /**
  * Acts as an data source for the tooltip
@@ -20,7 +27,7 @@ import static com.ramaraj.tooltip.Constants.*;
  */
 public class ToolTipComposer {
 
-    private final HashMap<String, List<HashMap<String, String>>> allTipData;
+    private final HashMap<String, List<ToolTipModel>> allTipData;
 
     /**
      * Default constructor
@@ -29,13 +36,13 @@ public class ToolTipComposer {
      * @param allTipData   All the trip data with key being the activity name
      * @param globalConfig App wide configuration for constructing the tips
      */
-    private ToolTipComposer(HashMap<String, List<HashMap<String, String>>> allTipData,
+    private ToolTipComposer(HashMap<String, List<ToolTipModel>> allTipData,
                             ToolTipConfig globalConfig) {
         this.allTipData = allTipData;
         ToolTipConfig.setInstance(globalConfig);
     }
 
-    public HashMap<String, List<HashMap<String, String>>> getAllTipData() {
+    public Map<String, List<ToolTipModel>> getAllTipData() {
         return allTipData;
     }
 
@@ -43,7 +50,9 @@ public class ToolTipComposer {
      * Helper class to create the TipComposer object
      */
     public static class Builder {
-        private HashMap<String, List<HashMap<String, String>>> allTipData;
+
+        private HashMap<String, List<ToolTipModel>> allTipData;
+
         private ToolTipConfig globalConfig;
 
         /**
@@ -62,7 +71,8 @@ public class ToolTipComposer {
          * @param messages     Array of the tip message
          * @return A {@code ToolTipComposer.Builder} object
          */
-        public Builder addStaticTips(String activityName, String[] identifiers, String[] titles, String[] messages) {
+        public Builder addStaticTips(String activityName, String[] identifiers, String[] titles,
+                                     String[] messages) {
             if (activityName == null || identifiers == null || titles == null) {
                 throw new NullPointerException("Missing mandatory values.");
             }
@@ -71,7 +81,14 @@ public class ToolTipComposer {
             }
             for (int i = 0; i < identifiers.length; i++) {
                 String message = (messages == null || messages.length == 0) ? "" : messages[i];
-                this.addStaticTip(activityName, identifiers[i], titles[i], message);
+
+                ToolTipModel toolTipModel = new ToolTipModel();
+                toolTipModel.setPageName(activityName);
+                toolTipModel.setComponentId(identifiers[i]);
+                toolTipModel.setTitle(titles[i]);
+                toolTipModel.setMessage(message);
+
+                this.addStaticTip(activityName, toolTipModel);
             }
             return this;
         }
@@ -79,49 +96,69 @@ public class ToolTipComposer {
         /**
          * Add static tip data
          *
-         * @param activityName Local class name of the activity
-         * @param resourceId   Resource id of the target view
-         * @param title        Optional title for the tip
-         * @param message      Message/hint/decription
-         * @return A {@code ToolTipComposer.Builder} object
+         * @param activityName  Local class name of the activity
+         * @param aToolTipModel hold the tooltip information
          */
-        public Builder addStaticTip(String activityName, String resourceId, String title, String message) {
-            HashMap<String, String> tip = new HashMap<>();
-            tip.put(RESOURCE_ID_KEY, resourceId);
-            tip.put(TIP_TITLE_ID_KEY, title);
-            tip.put(TIP_MESSAGE_ID_KEY, message);
+        void addStaticTip(String activityName, ToolTipModel aToolTipModel) {
 
-            List<HashMap<String, String>> tipsForActivity = allTipData.get(activityName);
+            List<ToolTipModel> tipsForActivity = allTipData.get(activityName);
+
             if (tipsForActivity == null) {
                 tipsForActivity = new ArrayList<>();
             }
-            tipsForActivity.add(tip);
+
+            tipsForActivity.add(aToolTipModel);
+
             allTipData.put(activityName, tipsForActivity);
-            return this;
         }
 
         /**
          * Construct the tip data from the json formatted tip data
+         *
          * @param tipDataJson Tip data in Json format
-         * @see <a href="https://raw.githubusercontent.com/jsramraj/tooltip/master/app/src/main/assets/tooltip_data.json">Sample data</a>
          * @return A {@code ToolTipComposer.Builder} object
          * @throws JSONException if the json is not following standard mentioned in the above link. Check Sample data section.
+         * @see <a href="https://raw.githubusercontent.com/jsramraj/tooltip/master/app/src/main/assets/tooltip_data.json">Sample data</a>
          */
-        public Builder addStaticTip(String tipDataJson) throws JSONException {
+        private Builder addStaticTip(String tipDataJson) throws JSONException {
+
             if (tipDataJson == null)
                 throw new NullPointerException("Json value cannot be null");
+
             JSONObject jsonData = new JSONObject(tipDataJson);
             for (Iterator<String> it = jsonData.keys(); it.hasNext(); ) {
                 String activityName = it.next();
                 JSONArray data = jsonData.getJSONArray(activityName);
 
                 for (int i = 0; i < data.length(); i++) {
+
                     JSONObject tipObject = data.getJSONObject(i);
-                    this.addStaticTip(activityName,
-                            tipObject.getString(RESOURCE_ID_KEY),
-                            tipObject.has(TIP_TITLE_ID_KEY) ? tipObject.getString(TIP_TITLE_ID_KEY) : "",
-                            tipObject.getString(TIP_MESSAGE_ID_KEY));
+
+                    ToolTipModel toolTipModel = new ToolTipModel();
+                    toolTipModel.setPageName(activityName);
+                    toolTipModel.setComponentId(tipObject.getString(RESOURCE_ID_KEY));
+                    toolTipModel.setTitle(tipObject.has(TIP_TITLE_ID_KEY) ? tipObject.getString(TIP_TITLE_ID_KEY) : "");
+                    toolTipModel.setMessage(tipObject.getString(TIP_MESSAGE_ID_KEY));
+
+                    this.addStaticTip(
+                            activityName,
+                            toolTipModel
+                    );
                 }
+            }
+            return this;
+        }
+
+        public Builder addStaticTip(Context aContext, @NonNull String aJsonFileName) {
+            String jsonContent = ResourceUtils.readJSONFromAsset(aContext, aJsonFileName);
+            try {
+                addStaticTip(jsonContent);
+            } catch (JSONException e) {
+                throw new IllegalArgumentException(
+                        "Please provide a valid json file. " +
+                                "Please take a look on this sample " +
+                                "https://raw.githubusercontent.com/jsramraj/tooltip/master/app/src/main/assets/tooltip_data.json"
+                );
             }
             return this;
         }
@@ -129,7 +166,7 @@ public class ToolTipComposer {
         /**
          * Set the app wide configuration to customize the appearance of the tip
          *
-         * @param globalConfig
+         * @param globalConfig to super impose style values
          * @return A {@code ToolTipComposer.Builder} object
          */
         public Builder setGlobalConfig(ToolTipConfig globalConfig) {

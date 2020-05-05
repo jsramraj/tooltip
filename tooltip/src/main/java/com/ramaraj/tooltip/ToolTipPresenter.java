@@ -39,15 +39,14 @@ public class ToolTipPresenter implements ToolTipListener.ToolTipOnDismissListene
             if (tipShown) {
                 toolTip.setOnDismissListener(this);
                 return;
-            } else {
-                // the tip could not be displayed,
-                // possible reason is the target view is not visible or null
-                // let's display the next tip
-                continue;
             }
+
+            // the tip could not be displayed,
+            // possible reason is the target view is not visible or null
+            // let's display the next tip
         }
 
-        if (toolTips.size() > 0) {
+        if (!toolTips.isEmpty()) {
             // few tips are still not displayed
             // this could be because, the target view is not a valid one or the target view is not yet added to the view
             // let's defer and observe for the target view to appear
@@ -74,7 +73,7 @@ public class ToolTipPresenter implements ToolTipListener.ToolTipOnDismissListene
 
     @Override
     public void onTipDismissed(ToolTip tip) {
-        if (toolTips.size() > 0) {
+        if (!toolTips.isEmpty()) {
             toolTips.remove(tip);
         }
         showNextTip();

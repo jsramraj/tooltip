@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 
 import com.ramaraj.tooltip.utils.ResourceUtils;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -25,6 +24,7 @@ public class ToolTipManager {
 
     /**
      * Inject the application (to get the context) and the tips via tip composer
+     *
      * @param application An application instance for getting the context
      * @param tipComposer All the tips are to be pushed via the {@code ToolTipComposer}
      */
@@ -86,6 +86,7 @@ public class ToolTipManager {
 
         /**
          * Inject the tip composer object with all the tip data
+         *
          * @param _tipComposer a {@code ToolTipComposer } object
          */
         protected static void init(ToolTipComposer _tipComposer) {
@@ -94,6 +95,7 @@ public class ToolTipManager {
 
         /**
          * Show the static tips for the given activity
+         *
          * @param activity Activity to show the tip
          */
         protected static void showTipsForActivity(Activity activity) {
@@ -107,19 +109,31 @@ public class ToolTipManager {
 
         /**
          * Construct the static tips for the given activity from the tipcomposer's tip data
+         *
          * @param activity The parent activity
          */
         protected static void buildTipsForActivity(Activity activity) {
-            List<HashMap<String, String>> tipsForActivity = tipComposer.getAllTipData().get(activity.getLocalClassName());
+
+            List<ToolTipModel> tipsForActivity = tipComposer.getAllTipData().get(activity.getLocalClassName());
+
+            if (tipsForActivity == null) {
+                throw new IllegalArgumentException("Tips for activity map found as null");
+            }
+
             String activityName = activity.getLocalClassName();
 
             tipBuilder = new ToolTipBuilder();
-            for (HashMap<String, String> tipData : tipsForActivity) {
-                int resourceIdentifier = ResourceUtils.getResourceId(activity, tipData.get(Constants.RESOURCE_ID_KEY));
-                tipBuilder.addStaticTip(activityName,
+
+            for (ToolTipModel tipData : tipsForActivity) {
+
+                int resourceIdentifier = ResourceUtils.getResourceId(activity, tipData.getComponentId());
+
+                tipBuilder.addStaticTip(
+                        activityName,
                         resourceIdentifier,
-                        tipData.get(Constants.TIP_TITLE_ID_KEY),
-                        tipData.get(Constants.TIP_MESSAGE_ID_KEY));
+                        tipData.getTitle(),
+                        tipData.getMessage()
+                );
             }
         }
 
@@ -127,6 +141,7 @@ public class ToolTipManager {
          * The client app can use this method, if they want to relaunch the tips for any activities
          * This will relaunch all the tips for the given activity, even if the user acknowledged any tips for this activity before.
          * This doesn't affect the acknowledgement of other tips from other activites
+         *
          * @param activity The parent activity
          */
         @MainThread
@@ -153,8 +168,9 @@ public class ToolTipManager {
         /**
          * Marks a tip as not acknowledged by the user
          * This removes the entry for the key activityName~resourceId with a boolean
+         *
          * @param activityName Local class name of the activity (Can get by calling the getLocalClassName() from the activity instance)
-         * @param resourceId Resource id of the view for which the user has acknowledged the tip
+         * @param resourceId   Resource id of the view for which the user has acknowledged the tip
          * @return True, if removing the key in the shared preference is successful, False otherwise
          */
         public static boolean resetAcknowledgement(String activityName, int resourceId) {
@@ -163,8 +179,9 @@ public class ToolTipManager {
 
         /**
          * Check if the user is acknowledged the tip before
+         *
          * @param activityName Local class name of the activity (Can get by calling the getLocalClassName() from the activity instance)
-         * @param resourceId Resource id of the view for which the user has acknowledged the tip
+         * @param resourceId   Resource id of the view for which the user has acknowledged the tip
          * @return True if an entry is found in the shared preferences, False otherwise
          */
         public static boolean isAcknowledged(String activityName, int resourceId) {
@@ -173,6 +190,7 @@ public class ToolTipManager {
 
         /**
          * Reset acknowledgement of all the tips
+         *
          * @return True if removing is successful, False otherwise
          */
         public static boolean resetAllAcknowledgements() {
@@ -182,6 +200,7 @@ public class ToolTipManager {
         /**
          * Reset acknowledgement of the tips for a single activity
          * This means, the next time user visits this activity, all the tips for that particular activity will be shown again
+         *
          * @param activityName Local class name of the activity (Can get by calling the getLocalClassName() from the activity instance)
          * @return True if removing is successful, False otherwise
          */

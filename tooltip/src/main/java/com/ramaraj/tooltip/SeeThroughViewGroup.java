@@ -64,6 +64,7 @@ public class SeeThroughViewGroup extends ViewGroup {
 
     @Override
     public void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        //Do nothing
     }
 
     @Override
@@ -102,6 +103,11 @@ public class SeeThroughViewGroup extends ViewGroup {
         );
     }
 
+    /**
+     * Changing the see through view corner radius value
+     *
+     * @param cornerRadius radius to the see through view
+     */
     public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
     }

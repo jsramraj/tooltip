@@ -1,11 +1,22 @@
 package com.ramaraj.tooltip.utils;
 
 import android.app.Activity;
+import android.content.Context;
+import android.util.Log;
 
+import com.ramaraj.tooltip.Constants;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class ResourceUtils {
+
+    private ResourceUtils() {
+
+    }
 
     public static int getResourceId(String resName, Class<?> c) {
 
@@ -13,7 +24,12 @@ public class ResourceUtils {
             Field idField = c.getDeclaredField(resName);
             return idField.getInt(idField);
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(
+                    Constants.TAG,
+                    StringUtils.isNullOrEmpty(e.getLocalizedMessage()) ?
+                            "Unknown" :
+                            e.getLocalizedMessage()
+            );
             return -1;
         }
     }
@@ -27,8 +43,11 @@ public class ResourceUtils {
     }
 
     public static int[] getResourceIdentifiers(Activity activity, List<String> stringIdentifiers) {
-        if (stringIdentifiers == null || stringIdentifiers.size() == 0)
-            return null;
+
+        if (stringIdentifiers == null || stringIdentifiers.isEmpty()) {
+            return new int[0];
+        }
+
         int[] identifiers = new int[stringIdentifiers.size()];
 
         for (int i = 0; i < stringIdentifiers.size(); i++) {
@@ -36,6 +55,22 @@ public class ResourceUtils {
         }
 
         return identifiers;
+    }
+
+    public static String readJSONFromAsset(Context aContext, String aJsonFileName) {
+        String json = null;
+        try {
+            InputStream is = aContext.getAssets().open(aJsonFileName);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, StandardCharsets.UTF_8);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
     }
 }
 

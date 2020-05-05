@@ -8,12 +8,15 @@ import android.content.SharedPreferences;
  * If an entry is found in the shared preference for a activity name and the resource id, it means that the user has seen/dismissed the tip
  */
 public class PersistentManager {
-    private static PersistentManager instance;
-    private static final Object lock = new Object();
 
-    private static final String preferenceFileKey = "com.ramaraj.tooltip.data";
-    private static final String delimiter = "~";
-    private static SharedPreferences sharedPreferences;
+    private static PersistentManager instance;
+
+    private static final Object LOCK = new Object();
+
+    private static final String PREFERENCE_FILE_KEY = "com.ramaraj.tooltip.data";
+    private static final String DELIMITER = "~";
+
+    private volatile static SharedPreferences sharedPreferences;
 
     /**
      * The default constructor is made private to avoid creating this class from outside
@@ -28,7 +31,7 @@ public class PersistentManager {
      * @param context Context Application context
      */
     public static void init(Context context) {
-        sharedPreferences = context.getSharedPreferences(preferenceFileKey, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(PREFERENCE_FILE_KEY, Context.MODE_PRIVATE);
     }
 
     /**
@@ -38,7 +41,7 @@ public class PersistentManager {
     public static PersistentManager getInstance() {
 
         if (instance == null) {
-            synchronized  (lock) {
+            synchronized (LOCK) {
                 if (instance == null) {
                     instance = new PersistentManager();
                 }
@@ -58,7 +61,7 @@ public class PersistentManager {
      */
     public boolean acknowledge(String activityName, int resourceId) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(activityName + delimiter + resourceId, true);
+        editor.putBoolean(activityName + DELIMITER + resourceId, true);
         return editor.commit();
     }
 
@@ -71,7 +74,7 @@ public class PersistentManager {
      */
     public boolean resetAcknowledgement(String activityName, int resourceId) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove(activityName + delimiter + resourceId);
+        editor.remove(activityName + DELIMITER + resourceId);
         return editor.commit();
     }
 
@@ -82,7 +85,7 @@ public class PersistentManager {
      * @return True if an entry is found in the shared preferences, False otherwise
      */
     public boolean isAcknowledged(String activityName, int resourceId) {
-        return sharedPreferences.getBoolean(activityName + delimiter + resourceId, false);
+        return sharedPreferences.getBoolean(activityName + DELIMITER + resourceId, false);
     }
 
     /**

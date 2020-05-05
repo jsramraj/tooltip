@@ -23,14 +23,14 @@ public class StaticTip extends ToolTip {
 
     private PopupWindow tipPopupWindow;
 
-    public StaticTip(String activityName, int resourceId, String tipTitle, String tipText) {
+    StaticTip(String activityName, int resourceId, String tipTitle, String tipText) {
         super(activityName, resourceId, tipTitle, tipText);
     }
 
     @Override
     public boolean displayTip(Activity activity) {
 
-        View targetView = activity.findViewById(resourceId);
+        View targetView = activity.findViewById(getResourceId());
         if (targetView == null) {
             //No view with this id is found in the activity
             return false;
@@ -53,7 +53,7 @@ public class StaticTip extends ToolTip {
         SeeThroughViewGroup holeView = tipView.findViewById(R.id.see_through_view);
         Button nextButton = tipView.findViewById(R.id.nextButton);
 
-        tipMessageTextView.setText(tipText);
+        tipMessageTextView.setText(getTipText());
         // Check if custom style is found in activity level
         if (ToolTipConfig.getInstance().getTipMessageStyleResId() > 0) {
             tipMessageTextView.setTextAppearance(ToolTipConfig.getInstance().getTipMessageStyleResId());
@@ -65,7 +65,7 @@ public class StaticTip extends ToolTip {
                 tipMessageTextView.setTextAppearance(config.getTipMessageStyleResId());
         }
 
-        int pos[] = new int[2];// location of the target view
+        int[] pos = new int[2];// location of the target view
         targetView.getLocationOnScreen(pos);
 
         // set the frame for the hole view
@@ -95,10 +95,10 @@ public class StaticTip extends ToolTip {
         titleTitleParams.topMargin = tipTextViewParams.topMargin - titleHeight - bottomSpace;
         tipTitleTextView.setLayoutParams(titleTitleParams);
 
-        tipTitleTextView.setText(tipTitle);
+        tipTitleTextView.setText(getTipTitle());
         // if the title for the tip is not registered, let's hide the tip title textview
-        tipTitleTextView.setVisibility(StringUtils.isNullOrEmpty(tipTitle) ? View.INVISIBLE : View.VISIBLE);
-        if (!StringUtils.isNullOrEmpty(tipTitle)) {
+        tipTitleTextView.setVisibility(StringUtils.isNullOrEmpty(getTipTitle()) ? View.INVISIBLE : View.VISIBLE);
+        if (!StringUtils.isNullOrEmpty(getTipTitle())) {
             // Check if custom style is found in activity level
             if (ToolTipConfig.getInstance().getTipTitleStyleResId() > 0) {
                 tipTitleTextView.setTextAppearance(ToolTipConfig.getInstance().getTipTitleStyleResId());
@@ -120,7 +120,7 @@ public class StaticTip extends ToolTip {
         });
 
         tipPopupWindow = new PopupWindow(tipView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
-        tipPopupWindow.showAtLocation(targetView, Gravity.TOP | Gravity.RIGHT, 0, 0);
+        tipPopupWindow.showAtLocation(targetView, Gravity.TOP | Gravity.END, 0, 0);
 
         return super.displayTip(activity);
     }

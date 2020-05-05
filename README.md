@@ -17,13 +17,19 @@ With other libraries, you have to create the showcase cards yourself from each i
 ## Initiate
 ### Using json data (Refer the Sample json data section for the format)
 ```java
-ToolTipComposer.Builder tipComposerBuilder = new ToolTipComposer.Builder();
-try {
-    tipComposerBuilder.addStaticTip(tipDataInJsonFormat);
-} catch (JSONException e) {
-    e.printStackTrace();
+public class ToolTipApp extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        //Adding static tip information to be shown in activities
+        ToolTipComposer.Builder tipComposerBuilder = new ToolTipComposer.Builder();
+        tipComposerBuilder.addStaticTip(this, "tooltip_data.json");
+
+        ToolTipManager.init(this, tipComposerBuilder.build());
+    }
 }
-ToolTipManager.init(this, tipComposerBuilder.build());
 ```
 
 ### By manually
