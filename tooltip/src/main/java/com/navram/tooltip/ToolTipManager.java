@@ -167,7 +167,8 @@ public class ToolTipManager {
          * Removes the global layout listeners from the presenter
          */
         public static void cleanUp() {
-            toolTipPresenter.cleanUp();
+            if (toolTipPresenter != null)
+                toolTipPresenter.cleanUp();
         }
     }
 

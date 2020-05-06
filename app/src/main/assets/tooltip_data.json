@@ -3,6 +3,10 @@
     {
       "id": "actionButton",
       "message": "Fabulous tip for the FAB button"
+    },
+    {
+      "id": "otherDetailsTextView",
+      "message": "This view was hidden at first and later appeared at some point. The tip for this view appeared as soon as the view appeared."
     }
   ],
   "LoginActivity": [

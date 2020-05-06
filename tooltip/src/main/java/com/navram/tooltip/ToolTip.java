@@ -17,6 +17,7 @@ public abstract class ToolTip {
 
     private ToolTipListener.ToolTipOnDismissListener onDismissListener;
 
+    ToolTipConfig config;
     /**
      * Default constructor to create the ToolTip
      *
@@ -81,5 +82,41 @@ public abstract class ToolTip {
      */
     public void setOnDismissListener(ToolTipListener.ToolTipOnDismissListener listener) {
         this.onDismissListener = listener;
+    }
+
+    protected ToolTipConfig toolTipConfig(Activity parentActivity) {
+        if (config == null) {
+            if (parentActivity instanceof ToolTipListener.ToolTipConfigChange) {
+                config = ((ToolTipListener.ToolTipConfigChange) parentActivity).configForTip(this);
+            }
+        }
+        if (config == null) {
+            config = ToolTipConfig.getInstance();
+        }
+        return config;
+    }
+
+    protected int titleTextViewStyleId(Activity parentActivity) {
+        ToolTipConfig config = toolTipConfig(parentActivity);
+        if (config.getTipTitleStyleResId() > 0)
+            return config.getTipTitleStyleResId();
+        else
+            return ToolTipConfig.getInstance().getTipTitleStyleResId();
+    }
+
+    protected int messageTextViewStyleId(Activity parentActivity) {
+        ToolTipConfig config = toolTipConfig(parentActivity);
+        if (config.getTipMessageStyleResId() > 0)
+            return config.getTipMessageStyleResId();
+        else
+            return ToolTipConfig.getInstance().getTipMessageStyleResId();
+    }
+
+    protected int nextButtonStyleId(Activity parentActivity) {
+        ToolTipConfig config = toolTipConfig(parentActivity);
+        if (config.getNextButtonStyleResId() > 0)
+            return config.getNextButtonStyleResId();
+        else
+            return ToolTipConfig.getInstance().getNextButtonStyleResId();
     }
 }

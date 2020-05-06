@@ -65,16 +65,9 @@ public class StaticTip extends ToolTip {
         Button nextButton = tipView.findViewById(R.id.nextButton);
 
         tipMessageTextView.setText(getTipText());
-        // Check if custom style is found in aActivity level
-        if (ToolTipConfig.getInstance().getTipMessageStyleResId() > 0) {
-            tipMessageTextView.setTextAppearance(ToolTipConfig.getInstance().getTipMessageStyleResId());
-        }
-        // Check if custom style is found in global level
-        if (aActivity instanceof ToolTipListener.ToolTipConfigChange) {
-            ToolTipConfig config = ((ToolTipListener.ToolTipConfigChange) aActivity).configForTip(this);
-            if (config != null && config.getTipMessageStyleResId() > 0)
-                tipMessageTextView.setTextAppearance(config.getTipMessageStyleResId());
-        }
+        tipTitleTextView.setText(getTipTitle());
+        // if the title for the tip is not registered, let's hide the tip title textview
+        tipTitleTextView.setVisibility(StringUtils.isNullOrEmpty(getTipTitle()) ? View.INVISIBLE : View.VISIBLE);
 
         int[] pos = new int[2];// location of the target view
         aTargetView.getLocationOnScreen(pos);
@@ -107,32 +100,12 @@ public class StaticTip extends ToolTip {
 
         textLayout.setLayoutParams(normalizeLayoutParams(aActivity, textViewLayoutParams));
 
-
-        tipTitleTextView.setText(getTipTitle());
-        // if the title for the tip is not registered, let's hide the tip title textview
-        tipTitleTextView.setVisibility(StringUtils.isNullOrEmpty(getTipTitle()) ? View.INVISIBLE : View.VISIBLE);
+        // check if the user has override the config method to customize the styling
+        tipMessageTextView.setTextAppearance(super.messageTextViewStyleId(aActivity));
         if (!StringUtils.isNullOrEmpty(getTipTitle())) {
-            // Check if custom style is found in aActivity level
-            if (ToolTipConfig.getInstance().getTipTitleStyleResId() > 0) {
-                tipTitleTextView.setTextAppearance(ToolTipConfig.getInstance().getTipTitleStyleResId());
-            }
-            // Check if custom style is found in global level
-            if (aActivity instanceof ToolTipListener.ToolTipConfigChange) {
-                ToolTipConfig config = ((ToolTipListener.ToolTipConfigChange) aActivity).configForTip(this);
-                if (config != null && config.getTipTitleStyleResId() > 0)
-                    tipTitleTextView.setTextAppearance(config.getTipTitleStyleResId());
-            }
+            tipTitleTextView.setTextAppearance(super.titleTextViewStyleId(aActivity));
         }
-
-        if (ToolTipConfig.getInstance().getNextButtonStyleResId() > 0) {
-            nextButton.setTextAppearance(ToolTipConfig.getInstance().getNextButtonStyleResId());
-        }
-        // Check if custom style is found in global level
-        if (aActivity instanceof ToolTipListener.ToolTipConfigChange) {
-            ToolTipConfig config = ((ToolTipListener.ToolTipConfigChange) aActivity).configForTip(this);
-            if (config != null && config.getNextButtonStyleResId() > 0)
-                nextButton.setTextAppearance(config.getNextButtonStyleResId());
-        }
+        nextButton.setTextAppearance(super.nextButtonStyleId(aActivity));
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
