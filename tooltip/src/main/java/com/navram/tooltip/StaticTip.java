@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -61,6 +62,7 @@ public class StaticTip extends ToolTip {
 
         // Inflate all the controls from the tip layout
         View tipView = LayoutInflater.from(aActivity).inflate(R.layout.tooltip_content, null);
+        LinearLayout textLayout = tipView.findViewById(R.id.text_layout);
         TextView tipMessageTextView = tipView.findViewById(R.id.hint_text);
         TextView tipTitleTextView = tipView.findViewById(R.id.tip_title);
         SeeThroughViewGroup holeView = tipView.findViewById(R.id.see_through_view);
@@ -91,22 +93,24 @@ public class StaticTip extends ToolTip {
         holeView.setCornerRadius(50);
         holeView.setLayoutParams(holeViewLayoutParams);
 
-        // set the frame for the tip description
-        tipMessageTextView.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        int height = tipMessageTextView.getMeasuredHeight();
-        int bottomSpace = 25;
-        FrameLayout.LayoutParams tipTextViewParams = (FrameLayout.LayoutParams) tipMessageTextView.getLayoutParams();
-        tipTextViewParams.leftMargin = 0;
-        tipTextViewParams.topMargin = holeViewLayoutParams.topMargin - height - bottomSpace;
-        tipMessageTextView.setLayoutParams(tipTextViewParams);
+        // set the frame for the title and description textviews
+        int availableWidth = displayMetrics.widthPixels;
 
-        // set the frame for the tip title
-        tipTitleTextView.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        int titleHeight = tipMessageTextView.getMeasuredHeight();
-        FrameLayout.LayoutParams titleTitleParams = (FrameLayout.LayoutParams) tipTitleTextView.getLayoutParams();
-        titleTitleParams.leftMargin = 0;
-        titleTitleParams.topMargin = tipTextViewParams.topMargin - titleHeight - bottomSpace;
-        tipTitleTextView.setLayoutParams(titleTitleParams);
+        int widthSpec = View.MeasureSpec.makeMeasureSpec(availableWidth, View.MeasureSpec.AT_MOST);
+        int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        tipMessageTextView.measure(widthSpec, heightSpec);
+        tipTitleTextView.measure(widthSpec, heightSpec);
+
+        int paddingOverTargetView = 50;
+        FrameLayout.LayoutParams textViewLayoutParams = (FrameLayout.LayoutParams) textLayout.getLayoutParams();
+        textViewLayoutParams.leftMargin = 0;
+        textViewLayoutParams.topMargin = holeViewLayoutParams.topMargin
+                - tipMessageTextView.getMeasuredHeight()
+                - tipTitleTextView.getMeasuredHeight()
+                - paddingOverTargetView;
+
+        textLayout.setLayoutParams(normalizeLayoutParams(aActivity, textViewLayoutParams));
+
 
         tipTitleTextView.setText(getTipTitle());
         // if the title for the tip is not registered, let's hide the tip title textview
@@ -134,6 +138,26 @@ public class StaticTip extends ToolTip {
 
         tipPopupWindow = new PopupWindow(tipView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
         tipPopupWindow.showAtLocation(aTargetView, Gravity.TOP | Gravity.END, 0, 0);
+    }
+
+    /**
+     * If the layout params goes outside the visible area of the activity's frame, this method will correct it.
+     * @param aActivity Target view's parent activity
+     * @param layoutParams Layout params of the title layout to normalize
+     * @return Normalized frame
+     */
+    private FrameLayout.LayoutParams normalizeLayoutParams(Activity aActivity, FrameLayout.LayoutParams layoutParams) {
+        View content = aActivity.findViewById(android.R.id.content);
+        ViewGroup.LayoutParams contentLayoutParams = content.getLayoutParams();
+        layoutParams.leftMargin = Math.max(layoutParams.leftMargin, 0);
+        layoutParams.topMargin = Math.max(layoutParams.topMargin, 0);
+        if (layoutParams.leftMargin + layoutParams.width > contentLayoutParams.width) {
+            layoutParams.leftMargin -= layoutParams.width;
+        }
+        if (layoutParams.topMargin + layoutParams.height > contentLayoutParams.height) {
+            layoutParams.topMargin -= layoutParams.height;
+        }
+        return layoutParams;
     }
 
     @Override

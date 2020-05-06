@@ -2,36 +2,26 @@
   "MainActivity": [
     {
       "id": "actionButton",
-      "message": "To add new task to track"
+      "message": "Fabulous tip for the FAB button"
     }
   ],
   "LoginActivity": [
     {
+      "id": "helpButton",
+      "message": "Wow! This works for the action button also"
+    },
+    {
       "id": "etEmail",
-      "message": "Enter a valid email address"
+      "message": "A very basic hint about email"
     },
     {
       "id": "etPassword",
-      "title": "Password",
-      "message": "Password should contain atleast 8 characters long"
+      "message": "This is a really long tool tip for the password field to demonstrate how multiple lines of descriptions auto align themselves"
     },
     {
       "id": "checkboxRemember",
       "title": "Remember Me",
-      "message": "Check this to persist your session details"
-    },
-    {
-      "id": "btnLogin",
-      "title": "Login",
-      "message": "Tap this after you enter valid credentials"
-    },
-    {
-      "id": "tvRestore",
-      "message": "This will open the reset password web page"
-    },
-    {
-      "id": "tvRegister",
-      "message": "You can create a new account by tapping this button"
+      "message": "It can have a title too? Great!!!"
     }
   ]
 }

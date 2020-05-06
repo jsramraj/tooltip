@@ -13,23 +13,29 @@
         android:layout_height="50dp"
         android:background="@android:color/transparent" />
 
-    <TextView
-        android:id="@+id/tip_title"
+    <LinearLayout
+        android:id="@+id/text_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/tooltip_title"
-        android:textAppearance="@style/defaultTipTitleStyle"/>
+        android:layout_margin="@dimen/text_margin"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/hint_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginLeft="@dimen/margin_16dp"
-        android:layout_marginRight="@dimen/margin_16dp"
-        android:text="@string/tooltip_information"
-        android:textAppearance="@style/defaultTipTextStyle"/>
+        <TextView
+            android:id="@+id/tip_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/tooltip_title"
+            android:textAppearance="@style/defaultTipTitleStyle" />
+
+        <TextView
+            android:id="@+id/hint_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/tooltip_information"
+            android:textAppearance="@style/defaultTipTextStyle" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/nextButton"

@@ -3,9 +3,12 @@ package com.example.tooltip;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.navram.tooltip.ToolTip;
@@ -28,6 +31,18 @@ public class LoginActivity extends AppCompatActivity implements ToolTipListener.
                 LoginActivity.this.startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.login_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        ToolTipManager.ActivityWrapper.relaunchHelpForActivity(this);
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
