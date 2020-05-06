@@ -16,16 +16,25 @@
         <item name="android:padding">2dip</item>
     </style>
 
-    <style name="tipTextStyleGlobal">
+    <style name="tipMessageStyleGlobal">
         <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textColor">@android:color/holo_purple</item>
+        <item name="android:textColor">@android:color/holo_green_light</item>
         <item name="android:textSize">25sp</item>
     </style>
 
     <style name="tipTitleTextStyleGlobal">
         <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textColor">#ffff00</item>
+        <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">35sp</item>
+    </style>
+
+    <style name="tipNextButtonStyle">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textColor">@android:color/holo_green_light</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@android:color/white</item>
+
     </style>
 
 </resources>

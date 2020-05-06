@@ -124,6 +124,15 @@ public class StaticTip extends ToolTip {
             }
         }
 
+        if (ToolTipConfig.getInstance().getNextButtonStyleResId() > 0) {
+            nextButton.setTextAppearance(ToolTipConfig.getInstance().getNextButtonStyleResId());
+        }
+        // Check if custom style is found in global level
+        if (aActivity instanceof ToolTipListener.ToolTipConfigChange) {
+            ToolTipConfig config = ((ToolTipListener.ToolTipConfigChange) aActivity).configForTip(this);
+            if (config != null && config.getNextButtonStyleResId() > 0)
+                nextButton.setTextAppearance(config.getNextButtonStyleResId());
+        }
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override

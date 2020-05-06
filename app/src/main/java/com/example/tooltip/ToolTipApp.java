@@ -17,8 +17,9 @@ public class ToolTipApp extends Application {
         // customize the tooltips globally.
         // this will override the default appearance of the tip
         ToolTipConfig globalConfig = new ToolTipConfig();
-        globalConfig.setTipMessageStyleResId(R.style.tipTextStyleGlobal);
         globalConfig.setTipTitleStyleResId(R.style.tipTitleTextStyleGlobal);
+        globalConfig.setTipMessageStyleResId(R.style.tipMessageStyleGlobal);
+        globalConfig.setNextButtonStyleResId(R.style.tipNextButtonStyle);
         tipComposerBuilder.setGlobalConfig(globalConfig);
 
         ToolTipManager.init(this, tipComposerBuilder.build());

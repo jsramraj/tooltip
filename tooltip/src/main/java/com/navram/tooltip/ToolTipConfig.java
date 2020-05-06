@@ -13,6 +13,7 @@ public class ToolTipConfig {
 
     private int tipMessageStyleResId;
     private int tipTitleStyleResId;
+    private int nextButtonStyleResId;
 
     /**
      * Default constructor. Default styles for the tips are set here
@@ -20,6 +21,7 @@ public class ToolTipConfig {
     public ToolTipConfig() {
         tipMessageStyleResId = R.style.defaultTipTextStyle;
         tipTitleStyleResId = R.style.defaultTipTitleStyle;
+        nextButtonStyleResId = R.style.defaultNextButtonStyle;
     }
 
     /**
@@ -72,5 +74,13 @@ public class ToolTipConfig {
      */
     public void setTipTitleStyleResId(@StyleRes int tipTitleStyleResId) {
         this.tipTitleStyleResId = tipTitleStyleResId;
+    }
+
+    public int getNextButtonStyleResId() {
+        return nextButtonStyleResId;
+    }
+
+    public void setNextButtonStyleResId(int nextButtonStyleResId) {
+        this.nextButtonStyleResId = nextButtonStyleResId;
     }
 }
