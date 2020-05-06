@@ -83,7 +83,7 @@ public class ToolTipComposer {
 
                 ToolTipModel toolTipModel = new ToolTipModel();
                 toolTipModel.setPageName(activityName);
-                toolTipModel.setComponentId(identifiers[i]);
+                toolTipModel.setResourceId(identifiers[i]);
                 toolTipModel.setTitle(titles[i]);
                 toolTipModel.setMessage(message);
 
@@ -129,7 +129,7 @@ public class ToolTipComposer {
 
                     ToolTipModel toolTipModel = new ToolTipModel();
                     toolTipModel.setPageName(activityName);
-                    toolTipModel.setComponentId(tipObject.getString(RESOURCE_ID_KEY));
+                    toolTipModel.setResourceId(tipObject.getString(RESOURCE_ID_KEY));
                     toolTipModel.setTitle(tipObject.has(TIP_TITLE_ID_KEY) ? tipObject.getString(TIP_TITLE_ID_KEY) : "");
                     toolTipModel.setMessage(tipObject.getString(TIP_MESSAGE_ID_KEY));
 

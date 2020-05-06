@@ -25,6 +25,7 @@ class ToolTipBuilder {
      * @param message      Array of tip message
      */
     void addStaticTip(String activityName, int identifier, String title, String message) {
+        // Check if the tip is already displayed to the user
         if (!PersistentManager.getInstance().isAcknowledged(activityName, identifier)) {
             allTips.add(new StaticTip(activityName, identifier, title, message));
         }

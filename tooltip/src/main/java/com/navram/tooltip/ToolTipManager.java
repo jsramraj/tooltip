@@ -137,7 +137,7 @@ public class ToolTipManager {
 
             for (ToolTipModel tipData : tipsForActivity) {
 
-                int resourceIdentifier = ResourceUtils.getResourceId(activity, tipData.getComponentId());
+                int resourceIdentifier = ResourceUtils.getResourceId(activity, tipData.getResourceId());
 
                 tipBuilder.addStaticTip(
                         activityName,

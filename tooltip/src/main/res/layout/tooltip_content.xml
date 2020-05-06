@@ -29,7 +29,7 @@
             android:textAppearance="@style/defaultTipTitleStyle" />
 
         <TextView
-            android:id="@+id/hint_text"
+            android:id="@+id/tip_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

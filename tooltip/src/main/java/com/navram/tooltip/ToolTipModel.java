@@ -7,7 +7,7 @@ public class ToolTipModel {
 
     private String pageName;
 
-    private String componentId;
+    private String resourceId;
 
     private String title;
 
@@ -21,12 +21,12 @@ public class ToolTipModel {
         this.pageName = pageName;
     }
 
-    public String getComponentId() {
-        return componentId;
+    public String getResourceId() {
+        return resourceId;
     }
 
-    public void setComponentId(String componentId) {
-        this.componentId = componentId;
+    public void setResourceId(String resourceId) {
+        this.resourceId = resourceId;
     }
 
     public String getTitle() {

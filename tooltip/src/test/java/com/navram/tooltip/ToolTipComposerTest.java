@@ -54,7 +54,7 @@ public class ToolTipComposerTest {
 
         ToolTipModel toolTipModel = new ToolTipModel();
         toolTipModel.setPageName(PAGE_NAME);
-        toolTipModel.setComponentId(PAGE_COMPONENT_ID);
+        toolTipModel.setResourceId(PAGE_COMPONENT_ID);
         toolTipModel.setTitle(TIP_TITLE);
         toolTipModel.setMessage(TIP_DESCRIPTION);
 
@@ -69,7 +69,7 @@ public class ToolTipComposerTest {
         assertNotNull(testActivity);
         assertFalse(testActivity.isEmpty());
         assertEquals(1, testActivity.size());
-        assertEquals(PAGE_COMPONENT_ID, testActivity.get(0).getComponentId());
+        assertEquals(PAGE_COMPONENT_ID, testActivity.get(0).getResourceId());
         assertEquals(TIP_TITLE, testActivity.get(0).getTitle());
         assertEquals(TIP_DESCRIPTION, testActivity.get(0).getMessage());
     }
@@ -104,7 +104,7 @@ public class ToolTipComposerTest {
         assertNotNull(values);
         assertFalse(values.isEmpty());
         assertEquals(3, values.size());
-        assertEquals("helloWorldLabel", values.get(0).getComponentId());
+        assertEquals("helloWorldLabel", values.get(0).getResourceId());
     }
 
     @Test(expected = NullPointerException.class)
@@ -156,7 +156,7 @@ public class ToolTipComposerTest {
         assertNotNull(values);
         assertFalse(values.isEmpty());
         assertEquals(4, values.size());
-        assertEquals("helloWorldLabel", values.get(0).getComponentId());
+        assertEquals("helloWorldLabel", values.get(0).getResourceId());
     }
 
     @Test

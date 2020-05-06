@@ -31,10 +31,6 @@ public class StaticTip extends ToolTip {
     @Override
     public boolean displayTip(Activity activity) {
 
-        if (PersistentManager.getInstance().isAcknowledged(getActivityName(), getResourceId())) {
-            return false;
-        }
-
         View targetView = activity.findViewById(getResourceId());
 
         if (targetView == null) {
@@ -63,7 +59,7 @@ public class StaticTip extends ToolTip {
         // Inflate all the controls from the tip layout
         View tipView = LayoutInflater.from(aActivity).inflate(R.layout.tooltip_content, null);
         LinearLayout textLayout = tipView.findViewById(R.id.text_layout);
-        TextView tipMessageTextView = tipView.findViewById(R.id.hint_text);
+        TextView tipMessageTextView = tipView.findViewById(R.id.tip_message);
         TextView tipTitleTextView = tipView.findViewById(R.id.tip_title);
         SeeThroughViewGroup holeView = tipView.findViewById(R.id.see_through_view);
         Button nextButton = tipView.findViewById(R.id.nextButton);
