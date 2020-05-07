@@ -1,6 +1,7 @@
 package com.example.tooltip;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -56,6 +57,7 @@ public class LoginActivity extends AppCompatActivity implements ToolTipListener.
             // to show home individual tips can be customized
             ToolTipConfig config = new ToolTipConfig();
             config.setTipMessageStyleResId(R.style.emailTipTextStyle);
+            config.setOverlayBackgroundColor(Color.parseColor("#3586FF"));
             return config;
         }
         return null;

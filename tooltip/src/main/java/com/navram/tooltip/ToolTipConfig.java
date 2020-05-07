@@ -1,5 +1,8 @@
 package com.navram.tooltip;
 
+import android.graphics.Color;
+
+import androidx.annotation.ColorInt;
 import androidx.annotation.StyleRes;
 
 /**
@@ -14,6 +17,7 @@ public class ToolTipConfig {
     private int tipMessageStyleResId;
     private int tipTitleStyleResId;
     private int nextButtonStyleResId;
+    private @ColorInt int overlayBackgroundColor;
 
     /**
      * Default constructor. Default styles for the tips are set here
@@ -22,6 +26,7 @@ public class ToolTipConfig {
         tipMessageStyleResId = R.style.defaultTipTextStyle;
         tipTitleStyleResId = R.style.defaultTipTitleStyle;
         nextButtonStyleResId = R.style.defaultNextButtonStyle;
+        overlayBackgroundColor = Color.parseColor("#D9000400");//75% transparency
     }
 
     /**
@@ -82,5 +87,13 @@ public class ToolTipConfig {
 
     public void setNextButtonStyleResId(int nextButtonStyleResId) {
         this.nextButtonStyleResId = nextButtonStyleResId;
+    }
+
+    public int getOverlayBackgroundColor() {
+        return overlayBackgroundColor;
+    }
+
+    public void setOverlayBackgroundColor(@ColorInt int overlayBackgroundColor) {
+        this.overlayBackgroundColor = overlayBackgroundColor;
     }
 }

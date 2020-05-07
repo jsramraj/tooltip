@@ -1,6 +1,7 @@
 package com.navram.tooltip;
 
 import android.app.Activity;
+import android.graphics.Color;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.IdRes;
@@ -118,5 +119,13 @@ public abstract class ToolTip {
             return config.getNextButtonStyleResId();
         else
             return ToolTipConfig.getInstance().getNextButtonStyleResId();
+    }
+
+    protected int overlayBackgroundColor(Activity parentActivity) {
+        ToolTipConfig config = toolTipConfig(parentActivity);
+        if (config.getOverlayBackgroundColor() != 0)
+            return config.getOverlayBackgroundColor();
+        else
+            return ToolTipConfig.getInstance().getOverlayBackgroundColor();
     }
 }

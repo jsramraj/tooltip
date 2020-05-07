@@ -1,6 +1,7 @@
 package com.navram.tooltip;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -117,6 +118,7 @@ public class StaticTip extends ToolTip {
             tipTitleTextView.setTextAppearance(super.titleTextViewStyleId(aActivity));
         }
         nextButton.setTextAppearance(super.nextButtonStyleId(aActivity));
+        tipView.setBackgroundColor(super.overlayBackgroundColor(aActivity));
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
