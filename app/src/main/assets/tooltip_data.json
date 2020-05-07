@@ -12,6 +12,7 @@
   "LoginActivity": [
     {
       "id": "helpButton",
+      "title": "Information",
       "message": "Wow! This works for the action button also"
     },
     {

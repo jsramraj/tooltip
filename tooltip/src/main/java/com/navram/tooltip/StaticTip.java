@@ -8,10 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.navram.tooltip.utils.StatusBarUtils;
 import com.navram.tooltip.utils.StringUtils;
@@ -58,7 +58,6 @@ public class StaticTip extends ToolTip {
 
         // Inflate all the controls from the tip layout
         View tipView = LayoutInflater.from(aActivity).inflate(R.layout.tooltip_content, null);
-        LinearLayout textLayout = tipView.findViewById(R.id.text_layout);
         TextView tipMessageTextView = tipView.findViewById(R.id.tip_message);
         TextView tipTitleTextView = tipView.findViewById(R.id.tip_title);
         SeeThroughViewGroup holeView = tipView.findViewById(R.id.see_through_view);
@@ -74,35 +73,47 @@ public class StaticTip extends ToolTip {
 
         // set the frame for the hole view
         int paddingForRect = 20;
-        FrameLayout.LayoutParams holeViewLayoutParams = (FrameLayout.LayoutParams) holeView.getLayoutParams();
+
+        int topMargin = StatusBarUtils.getStatusBarOffset(aActivity) + paddingForRect;
+
+        ConstraintLayout.LayoutParams holeViewLayoutParams = (ConstraintLayout.LayoutParams) holeView.getLayoutParams();
         holeViewLayoutParams.leftMargin = targetViewFrame.left - paddingForRect;
-        holeViewLayoutParams.topMargin = targetViewFrame.top - StatusBarUtils.getStatusBarOffset(aActivity) - paddingForRect;
+        holeViewLayoutParams.topMargin = targetViewFrame.top - topMargin;
         holeViewLayoutParams.width = targetViewFrame.width() + 2 * paddingForRect;
         holeViewLayoutParams.height = targetViewFrame.height() + 2 * paddingForRect;
+
         holeView.setCornerRadius(50);
         holeView.setLayoutParams(holeViewLayoutParams);
 
-        // set the frame for the title and description textviews
-        int availableWidth = displayMetrics.widthPixels;
+        boolean isTitleHasToShow = !StringUtils.isNullOrEmpty(getTipTitle());
 
-        int widthSpec = View.MeasureSpec.makeMeasureSpec(availableWidth, View.MeasureSpec.AT_MOST);
-        int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-        tipMessageTextView.measure(widthSpec, heightSpec);
-        tipTitleTextView.measure(widthSpec, heightSpec);
+        if (isTitleHasToShow &&
+                holeViewLayoutParams.topMargin < (tipTitleTextView.getHeight() + tipMessageTextView.getHeight()) ||
+                holeViewLayoutParams.topMargin < (tipMessageTextView.getHeight())) {
 
-        int paddingOverTargetView = 50;
-        FrameLayout.LayoutParams textViewLayoutParams = (FrameLayout.LayoutParams) textLayout.getLayoutParams();
-        textViewLayoutParams.leftMargin = 0;
-        textViewLayoutParams.topMargin = holeViewLayoutParams.topMargin
-                - tipMessageTextView.getMeasuredHeight()
-                - tipTitleTextView.getMeasuredHeight()
-                - paddingOverTargetView;
 
-        textLayout.setLayoutParams(normalizeLayoutParams(aActivity, textViewLayoutParams));
+            //Changing the constraints for tip message and title view of the tooltip window
+
+            ConstraintLayout.LayoutParams titleParams = (ConstraintLayout.LayoutParams) tipTitleTextView.getLayoutParams();
+            titleParams.topToBottom = holeView.getId();
+            titleParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
+            titleParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
+            titleParams.bottomToTop = ConstraintLayout.LayoutParams.UNSET;
+
+            ConstraintLayout.LayoutParams messageParams = (ConstraintLayout.LayoutParams) tipMessageTextView.getLayoutParams();
+            messageParams.topToBottom = tipTitleTextView.getId();
+            messageParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
+            messageParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
+            messageParams.bottomToTop = ConstraintLayout.LayoutParams.UNSET;
+
+            tipTitleTextView.requestLayout();
+            tipMessageTextView.requestLayout();
+        }
 
         // check if the user has override the config method to customize the styling
         tipMessageTextView.setTextAppearance(super.messageTextViewStyleId(aActivity));
-        if (!StringUtils.isNullOrEmpty(getTipTitle())) {
+
+        if (isTitleHasToShow) {
             tipTitleTextView.setTextAppearance(super.titleTextViewStyleId(aActivity));
         }
         nextButton.setTextAppearance(super.nextButtonStyleId(aActivity));
@@ -116,26 +127,23 @@ public class StaticTip extends ToolTip {
 
         tipPopupWindow = new PopupWindow(tipView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
         tipPopupWindow.showAtLocation(aTargetView, Gravity.TOP | Gravity.END, 0, 0);
-    }
 
-    /**
-     * If the layout params goes outside the visible area of the activity's frame, this method will correct it.
-     * @param aActivity Target view's parent activity
-     * @param layoutParams Layout params of the title layout to normalize
-     * @return Normalized frame
-     */
-    private FrameLayout.LayoutParams normalizeLayoutParams(Activity aActivity, FrameLayout.LayoutParams layoutParams) {
-        View content = aActivity.findViewById(android.R.id.content);
-        ViewGroup.LayoutParams contentLayoutParams = content.getLayoutParams();
-        layoutParams.leftMargin = Math.max(layoutParams.leftMargin, 0);
-        layoutParams.topMargin = Math.max(layoutParams.topMargin, 0);
-        if (layoutParams.leftMargin + layoutParams.width > contentLayoutParams.width) {
-            layoutParams.leftMargin -= layoutParams.width;
-        }
-        if (layoutParams.topMargin + layoutParams.height > contentLayoutParams.height) {
-            layoutParams.topMargin -= layoutParams.height;
-        }
-        return layoutParams;
+        tipView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                if (holeView.getBottom() >= nextButton.getTop()) {
+
+                    ConstraintLayout.LayoutParams nextButtonParams = (ConstraintLayout.LayoutParams) nextButton.getLayoutParams();
+                    nextButtonParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+                    nextButtonParams.startToStart = ConstraintLayout.LayoutParams.UNSET;
+                    nextButtonParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
+                    nextButtonParams.bottomToBottom = ConstraintLayout.LayoutParams.UNSET;
+
+                    nextButton.requestLayout();
+                }
+            }
+        }, 250);
     }
 
     @Override

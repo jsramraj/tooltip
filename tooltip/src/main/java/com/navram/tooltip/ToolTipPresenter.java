@@ -9,13 +9,16 @@ import java.util.List;
 /**
  * Used to present the tips to the user
  */
-public class ToolTipPresenter implements ToolTipListener.ToolTipOnDismissListener, ViewTreeObserver.OnGlobalLayoutListener {
+public class ToolTipPresenter implements ToolTipListener.ToolTipOnDismissListener,
+        ViewTreeObserver.OnGlobalLayoutListener {
+
     private List<StaticTip> toolTips;
     private Activity activity;
 
     /**
      * Construct the ToolTipPresenter
-     * @param builder The {@code ToolTipBuilder} object that has the array of the ToolTips
+     *
+     * @param builder  The {@code ToolTipBuilder} object that has the array of the ToolTips
      * @param activity Activity that calls this method
      */
     public ToolTipPresenter(ToolTipBuilder builder, Activity activity) {
@@ -66,7 +69,7 @@ public class ToolTipPresenter implements ToolTipListener.ToolTipOnDismissListene
     /**
      * Removes the global layout listener
      */
-    public void cleanUp () {
+    public void cleanUp() {
         View activityView = activity.findViewById(android.R.id.content);
         activityView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
     }
