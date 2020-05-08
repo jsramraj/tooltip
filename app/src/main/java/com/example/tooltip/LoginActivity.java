@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity implements ToolTipListener.
             // to show home individual tips can be customized
             ToolTipConfig config = new ToolTipConfig();
             config.setTipMessageStyleResId(R.style.emailTipTextStyle);
-            config.setOverlayBackgroundColor(Color.parseColor("#3586FF"));
+            config.setOverlayBackgroundColor(Color.parseColor("#e60a403a"));
             return config;
         }
         return null;
