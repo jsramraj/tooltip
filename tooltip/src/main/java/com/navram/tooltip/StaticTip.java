@@ -1,7 +1,6 @@
 package com.navram.tooltip;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.navram.tooltip.utils.GeometryUtils;
 import com.navram.tooltip.utils.StatusBarUtils;
 import com.navram.tooltip.utils.StringUtils;
 
@@ -74,16 +74,28 @@ public class StaticTip extends ToolTip {
 
         // set the frame for the hole view
         int paddingForRect = 20;
+        int cornerRadius = 50;
+
+        float deviation = 0.1f;//10 % deviation
+        int holeWidth = targetViewFrame.width() + 2 * paddingForRect;
+        int holeHeight = targetViewFrame.height() + 2 * paddingForRect;
+
+        // check if the frame of the target view is a square (with given deviation)
+        if (GeometryUtils.isAlmostSquare(holeWidth, holeHeight, deviation)) {
+            // let's draw a circle instead of rounded rectangle
+            cornerRadius = Math.max(holeWidth, holeHeight) / 2;
+            holeWidth = holeHeight = Math.max(holeWidth, holeHeight);
+        }
 
         int topMargin = StatusBarUtils.getStatusBarOffset(aActivity) + paddingForRect;
 
         ConstraintLayout.LayoutParams holeViewLayoutParams = (ConstraintLayout.LayoutParams) holeView.getLayoutParams();
         holeViewLayoutParams.leftMargin = targetViewFrame.left - paddingForRect;
         holeViewLayoutParams.topMargin = targetViewFrame.top - topMargin;
-        holeViewLayoutParams.width = targetViewFrame.width() + 2 * paddingForRect;
-        holeViewLayoutParams.height = targetViewFrame.height() + 2 * paddingForRect;
+        holeViewLayoutParams.width = holeWidth;
+        holeViewLayoutParams.height = holeHeight;
 
-        holeView.setCornerRadius(50);
+        holeView.setCornerRadius(cornerRadius);
         holeView.setLayoutParams(holeViewLayoutParams);
 
         boolean isTitleHasToShow = !StringUtils.isNullOrEmpty(getTipTitle());
