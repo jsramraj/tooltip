@@ -1,3 +1,5 @@
+![](https://komarev.com/ghpvc/?username=jsramraj-tooltip&label=view%20count)
+
 # ToolTipView For android
 ToolTipView is a simple tooltip/intro/showcase library for Android
 
