@@ -1,4 +1,5 @@
-![](https://komarev.com/ghpvc/?username=jsramraj-tooltip&label=view%20count)
+![](https://komarev.com/ghpvc/?username=jsramraj-tooltip&label=view%20count) [![](https://jitpack.io/v/jsramraj/tooltip.svg)](https://jitpack.io/#jsramraj/tooltip)
+
 
 # ToolTipView For android
 ToolTipView is a simple tooltip/intro/showcase library for Android
